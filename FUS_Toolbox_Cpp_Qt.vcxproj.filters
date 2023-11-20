@@ -93,4 +93,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="FUS_Toolbox_CPP_Qt.yml">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

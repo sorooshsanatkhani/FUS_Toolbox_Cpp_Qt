@@ -1,0 +1,171 @@
+name: FUSapp build and release
+
+on:
+  workflow_dispatch:  # This allows the workflow to be triggered manually
+  #push:
+  #  branches: [ master ]
+  #pull_request:
+  #  branches: [ master ]
+
+jobs:
+
+  build:
+  
+    strategy:
+      matrix:
+        configuration: [Release]
+        platform: [x64]
+
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    env:
+      Solution_Name: FUSapp.sln                         # Replace with your solution name, i.e. App1.sln.
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    # Restoring
+    - name: Restore NuGet packages
+      run: nuget restore ${{ env.Solution_Name }}
+
+    # Restore the application to populate the obj folder with RuntimeIdentifiers
+    - name: Restore the application
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    # Decode the base 64 encoded pfx and save the Signing_Certificate
+    - name: Decode the pfx
+      run: |
+        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
+        $certificatePath = "GitHubActionsWorkflow.pfx"
+        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+
+    # Create the app package by building and packaging the project
+    - name: Create the app package
+      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true
+      env:
+        Appx_Bundle: Never
+        Appx_Package_Build_Mode: SideloadOnly
+        Appx_Package_Dir: Packages\
+        Configuration: ${{ matrix.configuration }}
+        Platform: ${{ matrix.platform }}
+
+    # Remove the pfx
+    - name: Remove the pfx
+      run: Remove-Item -path GitHubActionsWorkflow.pfx
+
+######### Artifact #############
+    - name: Download a Build Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: MSIX Package and Certificate Files
+        path: |
+          D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
+          D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.cer
+
+    - name: List files in Artifacts directory
+      run: |
+         Get-ChildItem -Path "${{ github.workspace }}/packages/*_x64_Test" -Recurse    
+      shell: pwsh
+###############################################################
+################### Release ###################################
+###############################################################
+  release:
+    needs: build
+    runs-on: windows-latest
+
+##### Permission for github token #############                            
+    permissions: write-all     
+##############################################
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version
+        id: extract_version
+        run: |
+          $content = Get-Content -Path "${{ github.workspace }}/Package.appxmanifest"
+          $xml = [xml]$content
+          $version = $xml.Package.Identity.Version
+          echo "version=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "The version number is: $version"
+        shell: pwsh
+      
+      - name: Check if release exists
+        id: check_release
+        run: |
+          $ErrorActionPreference = 'SilentlyContinue'
+          $response = Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ env.version }}" -Headers @{Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"}
+          if ($response) {
+            echo "id=$($response.id)" | Out-File -FilePath $env:GITHUB_ENV -Append
+          }
+        shell: pwsh
+
+      - name: Delete existing release
+        if: env.id != ''
+        run: |
+          Invoke-RestMethod -Method Delete -Uri "https://api.github.com/repos/${{ github.repository }}/releases/${{ env.id }}" -Headers @{Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"}
+        shell: pwsh
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.version }}
+          release_name: Release ${{ env.version }}
+          draft: false
+          prerelease: false
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: MSIX Package and Certificate Files
+          path: "${{ github.workspace }}/Artifacts"
+
+      - name: List files in Artifacts directory
+        run: |
+          Get-ChildItem -Path "${{ github.workspace }}/Artifacts" -Recurse    
+        shell: pwsh
+
+  
+      - name: Upload Release Asset MSIX
+        id:   upload-release-asset-msix
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}_x64_Test/FUSapp_${{ env.version }}_x64.msix"
+          asset_name: 'FUSapp.msix'
+          asset_content_type: 'application/octet-stream'
+
+      - name: Upload Release Asset Cer
+        id: upload-release-asset-cer
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "${{ github.workspace }}/Artifacts/FUSapp_${{ env.version }}_x64_Test/FUSapp_${{ env.version }}_x64.cer"
+          asset_name: 'FUSapp_Certificate.cer'
+          asset_content_type: 'application/x-x509-ca-cert'

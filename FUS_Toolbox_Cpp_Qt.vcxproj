@@ -80,6 +80,17 @@
       <AdditionalLibraryDirectories>D:\MyPrograms\FUS_Toolbox_Cpp_Qt\Resources;C:\Program Files\Pico Technology\SDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\MyPrograms\FUS_Toolbox_Cpp_Qt\Resources;C:\Program Files\Pico Technology\SDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Program Files\Pico Technology\SDK\lib;D:\MyPrograms\FUS_Toolbox_Cpp_Qt\Resources;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ps4000.lib;visa64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -124,6 +135,7 @@
     <ClCompile Include="WaveformGenerator.cpp" />
     <ClCompile Include="GetDeviceStatus.cpp" />
     <ClCompile Include="main.cpp" />
+    <None Include="FUS_Toolbox_CPP_Qt.yml" />
     <None Include="FUS_Toolbox_Cpp_Qt.ico" />
     <ResourceCompile Include="FUS_Toolbox_Cpp_Qt.rc" />
     <QtMoc Include="WaveformGenerator.h" />
@@ -135,9 +147,11 @@
     <ClCompile Include="removeEnd.cpp" />
     <ClCompile Include="Resources\ps4000.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Resources\qcustomplot.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>

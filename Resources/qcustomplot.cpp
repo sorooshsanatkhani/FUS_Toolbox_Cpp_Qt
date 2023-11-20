@@ -35525,5 +35525,3 @@ QVector<QPointF> QCPPolarGraph::dataToLines(const QVector<QCPGraphData> &data) c
   return result;
 }
 /* end of 'src/polar/polargraph.cpp' */
-
-
