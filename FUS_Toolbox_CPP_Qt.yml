@@ -19,7 +19,7 @@ jobs:
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
     env:
-      Solution_Name: FUSapp.sln                         # Replace with your solution name, i.e. App1.sln.
+      Solution_Name: FUS_Toolbox_Cpp_Qt.sln                         # Replace with your solution name, i.e. App1.sln.
 
     steps:
     - name: Checkout
@@ -27,19 +27,9 @@ jobs:
       with:
         fetch-depth: 0
 
-    # Install the .NET Core workload
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.3.1
-
-    # Restoring
-    - name: Restore NuGet packages
-      run: nuget restore ${{ env.Solution_Name }}
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
@@ -74,8 +64,8 @@ jobs:
       with:
         name: MSIX Package and Certificate Files
         path: |
-          D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.msix
-          D:\a\FUS_Toolbox_WinUI3_Cpp-WinRT\FUS_Toolbox_WinUI3_Cpp-WinRT\packages\*_x64_Test\*_x64.cer
+          D:\a\FUS_Toolbox_Cpp_Qt\FUS_Toolbox_Cpp_Qt\packages\*_x64_Test\*_x64.msix
+          D:\a\FUS_Toolbox_Cpp_Qt\FUS_Toolbox_Cpp_Qt\packages\*_x64_Test\*_x64.cer
 
     - name: List files in Artifacts directory
       run: |
