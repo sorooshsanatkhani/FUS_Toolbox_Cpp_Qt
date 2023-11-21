@@ -30,7 +30,9 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3.3.0
       with:
+        host: windows
         version: '6.6.0'
+        dir: ${{ github.workspace }}/Qt
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
@@ -38,7 +40,7 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Qt5_DIR=$GITHUB_WORKSPACE/Qt/6.6.0/msvc2019_64/lib/cmake/Qt6
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release /p:Qt6_DIR=${{ github.workspace }}/Qt/6.6.0/msvc2019_64/lib/cmake/Qt6
       env:
         Configuration: ${{ matrix.configuration }}
 
@@ -51,13 +53,19 @@ jobs:
 
     # Create the app package by building and packaging the project
     - name: Create the app package
-      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true /p:Qt6_DIR=$GITHUB_WORKSPACE/Qt/6.6.0/msvc2019_64/lib/cmake/Qt6
+      run: |
+        msbuild $env:Solution_Name /p:Configuration=Release /p:Platform=x64 /
+        /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /
+        /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /
+        /p:AppxPackageDir=$env:Appx_Package_Dir /p:GenerateAppxPackageOnBuild=true /
+        /p:Qt6_DIR=$env:Qt6_DIR
       env:
         Appx_Bundle: Never
         Appx_Package_Build_Mode: SideloadOnly
         Appx_Package_Dir: Packages\
-        Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.platform }}
+        Configuration: Release
+        Platform: x64
+        Qt6_DIR: ${{ github.workspace }}/Qt/6.6.0/msvc2019_64/lib/cmake/Qt6
 
     # Remove the pfx
     - name: Remove the pfx
