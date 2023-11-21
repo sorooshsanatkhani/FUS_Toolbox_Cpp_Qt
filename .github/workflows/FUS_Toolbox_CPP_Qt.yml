@@ -54,18 +54,22 @@ jobs:
     # Create the app package by building and packaging the project
     - name: Create the app package
       run: |
-        msbuild $env:Solution_Name /p:Configuration=Release /p:Platform=x64 `
-        /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode `
-        /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx `
-        /p:AppxPackageDir=$env:Appx_Package_Dir /p:GenerateAppxPackageOnBuild=true `
-        /p:Qt6_DIR=$env:Qt6_DIR
+        msbuild $env:Solution_Name `
+          /p:Configuration=Release `
+          /p:Platform=x64 `
+          /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode `
+          /p:AppxBundle=$env:Appx_Bundle `
+          /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx `
+          /p:AppxPackageDir=$env:Appx_Package_Dir `
+          /p:GenerateAppxPackageOnBuild=true `
+          /p:Qt6_DIR="$env:Qt6_DIR"
       env:
         Appx_Bundle: Never
         Appx_Package_Build_Mode: SideloadOnly
         Appx_Package_Dir: Packages\
         Configuration: Release
         Platform: x64
-        Qt6_DIR: ${{ github.workspace }}\Qt\6.6.0\msvc2019_64
+        Qt6_DIR: ${{ github.workspace }}/Qt/6.6.0/msvc2019_64
 
     # Remove the pfx
     - name: Remove the pfx
