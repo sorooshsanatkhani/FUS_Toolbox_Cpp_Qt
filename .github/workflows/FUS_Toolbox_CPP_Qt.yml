@@ -65,7 +65,7 @@ jobs:
         Appx_Package_Dir: Packages\
         Configuration: Release
         Platform: x64
-        Qt6_DIR: ${{ github.workspace }}/Qt/6.6.0/msvc2019_64/lib/cmake/Qt6
+        Qt6_DIR: ${{ github.workspace }}\Qt\6.6.0\msvc2019_64
 
     # Remove the pfx
     - name: Remove the pfx
