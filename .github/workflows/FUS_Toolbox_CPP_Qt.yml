@@ -27,13 +27,19 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '6.6.0
+
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.3.1
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Qt5_DIR=$GITHUB_WORKSPACE/Qt/6.6.0/msvc2019_64/lib/cmake/Qt6
+      env:
       env:
         Configuration: ${{ matrix.configuration }}
 
@@ -46,7 +52,7 @@ jobs:
 
     # Create the app package by building and packaging the project
     - name: Create the app package
-      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true
+      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true /p:Qt6_DIR=$GITHUB_WORKSPACE/Qt/6.6.0/msvc2019_64/lib/cmake/Qt6
       env:
         Appx_Bundle: Never
         Appx_Package_Build_Mode: SideloadOnly
