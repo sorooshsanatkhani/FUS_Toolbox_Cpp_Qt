@@ -40,7 +40,6 @@ jobs:
     - name: Restore the application
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Qt5_DIR=$GITHUB_WORKSPACE/Qt/6.6.0/msvc2019_64/lib/cmake/Qt6
       env:
-      env:
         Configuration: ${{ matrix.configuration }}
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
