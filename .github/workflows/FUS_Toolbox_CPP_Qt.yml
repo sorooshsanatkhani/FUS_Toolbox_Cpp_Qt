@@ -1,0 +1,88 @@
+name: FUSapp build and release
+
+on:
+  workflow_dispatch:  # This allows the workflow to be triggered manually
+
+env:
+  SOURCE_DIR: ${{ github.workspace }}
+  QT_VERSION: 6.6.0
+  Solution_Name: FUS_Toolbox_Cpp_Qt.sln
+  ARTIFACT_WITHOUT_ZIP_ENDING: Artifact
+  BUILD_DIR_NAME: buildFUS_Toolbox_Cpp_Qt
+  
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      # 1
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      # 2
+      - name: Get all tags for correct version determination
+        working-directory: ${{ env.SOURCE_DIR }}
+        run: |
+          git fetch --all --tags -f
+      # 3
+      - name: Try to cache the Qt-Installation
+        id: cache-qt
+        uses: actions/cache@v3
+        env: 
+          cache-name: cache-qt
+        with:
+          path: ${{ runner.temp }}\Qt
+          key: ${{ runner.os }}-Qt-${{ env.QT_VERSION }}
+      # 4
+      - if: ${{ steps.cache-qt.outputs.cache-hit != 'true' }}
+        name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: windows
+          target: desktop
+          arch: win64_msvc2019_64
+          dir: ${{ runner.temp }}
+          setup-pyqt: false
+      # 5
+      - name: Download JOM
+        uses: suisei-cn/actions-download-file@v1
+        with:
+          url: http://download.qt.io/official_releases/jom/jom.zip
+          target: ${{ runner.temp }}\
+      # 6
+      - name: Extract JOM
+        working-directory: ${{ runner.temp }}
+        run: |
+          7z x jom.zip
+      # 7
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
+      # 8
+      - name: Create build directory
+        run: mkdir ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}
+      # 9
+      - name: Build FUS_Toolbox_Cpp_Qt
+        working-directory: ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}
+        
+        # have to set the path, when the Qt-Installation is cached
+        run: |
+          set PATH=%PATH%;..\Qt\${{ env.QT_VERSION }}\msvc2019_64\bin
+          qmake -r ${{ env.SOURCE_DIR }}\FUS_Toolbox_Cpp_Qt.pro ${{ env.QMAKE_OPTIONS }}
+          ${{ runner.temp }}\jom.exe -j2
+      # 10
+      - name: Prepare Artifact (delete unnecessary files)
+        working-directory: ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}
+        run: |
+          del /Q /F imports\${{ env.ARTIFACT_WITHOUT_ZIP_ENDING }}\*.pdb
+          del /Q /F imports\${{ env.ARTIFACT_WITHOUT_ZIP_ENDING }}\*.exp
+          del /Q /F imports\${{ env.ARTIFACT_WITHOUT_ZIP_ENDING }}\*.ilk
+          del /Q /F imports\${{ env.ARTIFACT_WITHOUT_ZIP_ENDING }}\*.lib
+      # 11
+      - name: Save the FUS_Toolbox_Cpp_Qt artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ARTIFACT_WITHOUT_ZIP_ENDING }}
+          path: ${{ runner.temp }}\${{ env.BUILD_DIR_NAME }}\imports\${{ env.ARTIFACT_WITHOUT_ZIP_ENDING }}
