@@ -100,12 +100,6 @@
     <None Include="FUS_Toolbox_CPP_Qt.yml">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="FUS_Toolbox_Cpp_Qt_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="Package.appxmanifest">
-      <Filter>Resource Files</Filter>
-    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\SmallTile.scale-100.png">
