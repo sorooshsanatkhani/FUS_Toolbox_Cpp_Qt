@@ -135,10 +135,6 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="x64\Release\FUS_Toolbox_Cpp_Qt.exe">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
-    </None>
     <QtRcc Include="FUSMainWindow.qrc" />
     <QtUic Include="FUSMainWindow.ui" />
     <QtMoc Include="FUSMainWindow.h" />
