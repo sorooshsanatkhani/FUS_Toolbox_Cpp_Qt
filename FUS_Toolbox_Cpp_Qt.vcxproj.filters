@@ -100,6 +100,7 @@
     <None Include="FUS_Toolbox_CPP_Qt.yml">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="x64\Release\FUS_Toolbox_Cpp_Qt.exe" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\SmallTile.scale-100.png">
