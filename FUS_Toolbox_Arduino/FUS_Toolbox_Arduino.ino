@@ -15,7 +15,7 @@ byte ENA_FB_Pin = 10;
 
 byte TEST_Pin = 11;
 
-const int microsteps = 3200; // 3200 microsteps per 10mm
+const int microsteps = 800; // 3200 microsteps per 10mm
 
 volatile bool stopRequested = false; // Flag to signal stop
 
@@ -59,16 +59,18 @@ void loop() {
       // Calculate steps and delay
       long steps = 20 * distance * microsteps;
       long Frequency = steps/TravelTime;
-      long HalfPeriod = (1000000.0)/(2.0*Frequency); // Delay in microseconds
+      long HalfPeriod = double((1000000.0)/(2.0*Frequency)); // Delay in microseconds
       Serial.print("Direction: ");
       Serial.print(direction);
       Serial.print(",  Distance: ");
       Serial.print(distance);
-      Serial.print(" mm,  Speed: ");
+      Serial.print("mm,  Speed: ");
       Serial.print(speed);
-      Serial.print(" mm/s,  Seps: ");
+      Serial.print("mm/s,  Steps: ");
       Serial.print(steps);
-      Serial.print(",  Half Period: ");
+      Serial.print("  ,  Frequency: ");
+      Serial.print(Frequency/1000.0);
+      Serial.print("kHz  ,  Half Period: ");
       Serial.print(HalfPeriod);
       Serial.println(" microseconds");
       // Control Left-Right movement
@@ -93,6 +95,7 @@ void loop() {
 void controlStepper(byte dirPin, byte pulPin, byte enaPin, bool direction, long steps, long HalfPeriod) {
   digitalWrite(dirPin, direction ? HIGH : LOW); // Set direction
   digitalWrite(enaPin, LOW); // Enable motor
+  delay(300); //minimum enable time is 200ms
   for (long i = 0; i < steps; i++) {
     if (Serial.available() > 0) {
       String receivedData = Serial.readStringUntil('\n');
@@ -107,6 +110,7 @@ void controlStepper(byte dirPin, byte pulPin, byte enaPin, bool direction, long 
     delayMicroseconds(HalfPeriod);
   }
   digitalWrite(enaPin, HIGH); // Disable motor after operation
+
 }
 
 void stopMotors() {
