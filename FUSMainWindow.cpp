@@ -3,6 +3,7 @@
 #include <sstream>
 #include "FUSMainWindow.h"  // Includes the FUSMainWindow class
 #include "WaveformGenerator.h"
+#include "Gantry.h"
 
 using namespace std;
 
@@ -11,12 +12,15 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
     : QMainWindow(parent),
     picoScope(new PicoScope(this)),
     waveformgenerator(new WaveformGenerator(this)),
+    gantry(new Gantry(this)),
     completionTimer(new QTimer(this)),
     progressTimer(new QTimer(this))
 {
     ui.setupUi(this);
     this->setWindowIcon(QIcon(":/FUSMainWindow/Resources/logo.ico"));
     ui.verticalLayout->addWidget(picoScope->getCustomPlot());
+
+    populateDIRComboBox(); // Now populate the combo box
 
     // Connections
     connectSignalsAndSlots();
@@ -76,6 +80,20 @@ void FUSMainWindow::connectSignalsAndSlots()
     connect(ui.Length_spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FUSMainWindow::handleSpinBox_Waveform_ValueChanged);
     connect(ui.GenerateWaveform_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGenerateWaveformButton);
     connect(ui.Abort_Button, &QPushButton::clicked, this, &FUSMainWindow::handleAbortButton);
+
+    // Connects the UI parts related to Gantry system to their respective slots
+    connect(ui.Gantry_open_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_open_ButtonClicked);
+    connect(ui.Gantry_right_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_right_ButtonClicked);
+    connect(ui.Gantry_left_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_left_ButtonClicked);
+    connect(ui.Gantry_up_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_up_ButtonClicked);
+    connect(ui.Gantry_down_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_down_ButtonClicked);
+    connect(ui.Gantry_forward_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_forward_ButtonClicked);
+    connect(ui.Gantry_backward_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_backward_ButtonClicked);
+    //connect(ui.Gantry_DIR_comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FUSMainWindow::handleSpinBox_Travel_ValueChanged);
+    //connect(ui.Gantry_distance_spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FUSMainWindow::handleSpinBox_Travel_ValueChanged);
+    //connect(ui.Gantry_speed_spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FUSMainWindow::handleSpinBox_Travel_ValueChanged);
+    connect(ui.Gantry_Move_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_move_ButtonClicked);
+    connect(ui.Gantry_Stop_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_stop_ButtonClicked);
 }
 
 // Defines the updateTextBox slot
@@ -298,3 +316,45 @@ void FUSMainWindow::handleAbortButton()
     progressBar->setValue(waveformgenerator->WaveformGenerator_Vars.Length);
 }
 ////////////////////////////////////////////////
+/////// Gantry System /////////
+void FUSMainWindow::populateDIRComboBox() {
+    QStringList options = { "Right", "Left", "Up", "Down", "Forward", "Backward"};
+    ui.Gantry_DIR_comboBox->addItems(options);
+}
+
+void FUSMainWindow::handleGantry_open_ButtonClicked()
+{
+	gantry->open_Click();
+}
+void FUSMainWindow::handleGantry_right_ButtonClicked()
+{
+    gantry->move_Click('R', 0.1, 0.1);
+}
+void FUSMainWindow::handleGantry_left_ButtonClicked()
+{
+    gantry->move_Click('L', 0.1, 0.1);
+}
+void FUSMainWindow::handleGantry_up_ButtonClicked()
+{
+	gantry->move_Click('U', 0.1, 0.1);
+}
+void FUSMainWindow::handleGantry_down_ButtonClicked()
+{
+	gantry->move_Click('D', 0.1, 0.1);
+}
+void FUSMainWindow::handleGantry_forward_ButtonClicked()
+{
+	gantry->move_Click('F', 0.1, 0.1);
+}
+void FUSMainWindow::handleGantry_backward_ButtonClicked()
+{
+	gantry->move_Click('B', 0.1, 0.1);
+}
+void FUSMainWindow::handleGantry_move_ButtonClicked()
+{
+    gantry->move_Click(ui.Gantry_DIR_comboBox->currentText().toStdString()[0], ui.Gantry_distance_spinBox->value(), ui.Gantry_speed_spinBox->value());
+}
+void FUSMainWindow::handleGantry_stop_ButtonClicked()
+{
+	gantry->stop_Click();
+}

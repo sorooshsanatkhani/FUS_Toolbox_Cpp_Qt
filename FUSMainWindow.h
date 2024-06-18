@@ -1,9 +1,11 @@
 #pragma once  // Ensures the header file is included only once in a single compilation
 
 #include <QtWidgets/QMainWindow>  // Includes QMainWindow which provides a main application window
+#include <QComboBox>
 #include "ui_FUSMainWindow.h"  // Includes the UI for the FUSMainWindow class
 #include "PicoScope.h"  // Includes the PicoScope class
 #include "WaveformGenerator.h"
+#include "Gantry.h"
 #include <QProgressBar>
 
 // Declares the FUSMainWindow class as a subclass of QMainWindow
@@ -14,6 +16,8 @@ class FUSMainWindow : public QMainWindow
 public:
     FUSMainWindow(QWidget* parent = nullptr);  // Constructor
     ~FUSMainWindow();  // Destructor
+
+    void populateDIRComboBox(); // Method to populate the combo box
 
     void emitPrintSignal(const QString& text);  // Function to emit the printSignal
 
@@ -51,11 +55,23 @@ private slots:
     void handleGenerateWaveformButton();
     void updateProgressBar();
     void handleAbortButton();
+    
+    // Gantry System Functions
+    void handleGantry_open_ButtonClicked();
+    void handleGantry_right_ButtonClicked();
+    void handleGantry_left_ButtonClicked();
+    void handleGantry_up_ButtonClicked();
+    void handleGantry_down_ButtonClicked();
+    void handleGantry_forward_ButtonClicked();
+    void handleGantry_backward_ButtonClicked();
+    void handleGantry_move_ButtonClicked();
+    void handleGantry_stop_ButtonClicked();
 
 private:
     Ui::FUSMainWindowClass ui;  // Instance of the UI class
     PicoScope* picoScope;  // Pointer to a PicoScope object
     WaveformGenerator* waveformgenerator;
+    Gantry* gantry;
     QProgressBar* progressBar;
     QElapsedTimer elapsedTimer;
     QTimer* progressTimer;

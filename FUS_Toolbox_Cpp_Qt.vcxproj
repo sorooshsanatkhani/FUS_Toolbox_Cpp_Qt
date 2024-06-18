@@ -43,8 +43,8 @@
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.6.2_msvc2019_64</QtInstall>
-    <QtModules>designer;charts;core;datavisualization;gui;printsupport;uiplugin;uitools;widgets</QtModules>
+    <QtInstall>6.7.0_msvc2019_64</QtInstall>
+    <QtModules>core;gui;widgets;printsupport;serialport;charts;datavisualization;designer;uitools;uiplugin</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -138,8 +138,11 @@
     <QtRcc Include="FUSMainWindow.qrc" />
     <QtUic Include="FUSMainWindow.ui" />
     <QtMoc Include="FUSMainWindow.h" />
+    <ClCompile Include="ArduinoDevice.cpp" />
     <ClCompile Include="Burst_ON.cpp" />
     <ClCompile Include="FUSMainWindow.cpp" />
+    <ClCompile Include="Gantry.cpp" />
+    <ClCompile Include="Move.cpp" />
     <ClCompile Include="Stop.cpp" />
     <ClCompile Include="WaveformGenerator.cpp" />
     <ClCompile Include="GetDeviceStatus.cpp" />
@@ -150,6 +153,8 @@
     <QtMoc Include="WaveformGenerator.h" />
     <QtMoc Include="PicoScope.h" />
     <QtMoc Include="Resources\qcustomplot.h" />
+    <QtMoc Include="Gantry.h" />
+    <QtMoc Include="ArduinoDevice.h" />
     <ClInclude Include="Resources\ps4000.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="PicoScope.cpp" />

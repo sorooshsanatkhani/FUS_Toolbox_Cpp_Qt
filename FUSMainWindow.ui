@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1364</width>
+    <width>1362</width>
     <height>645</height>
    </rect>
   </property>
@@ -28,10 +28,10 @@
    <widget class="QPushButton" name="readButton">
     <property name="geometry">
      <rect>
-      <x>880</x>
-      <y>10</y>
-      <width>75</width>
-      <height>22</height>
+      <x>630</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -51,9 +51,9 @@
    <widget class="QSpinBox" name="Timebase_spinBox">
     <property name="geometry">
      <rect>
-      <x>64</x>
-      <y>10</y>
-      <width>42</width>
+      <x>10</x>
+      <y>16</y>
+      <width>65</width>
       <height>22</height>
      </rect>
     </property>
@@ -65,21 +65,24 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>61</width>
-      <height>22</height>
+      <y>0</y>
+      <width>65</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Timebase</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QSpinBox" name="Buffer_spinBox">
     <property name="geometry">
      <rect>
-      <x>146</x>
-      <y>10</y>
-      <width>101</width>
+      <x>80</x>
+      <y>16</y>
+      <width>110</width>
       <height>22</height>
      </rect>
     </property>
@@ -96,36 +99,45 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>10</y>
-      <width>49</width>
-      <height>22</height>
+      <x>80</x>
+      <y>0</y>
+      <width>110</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Buffer</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>10</y>
-      <width>71</width>
-      <height>22</height>
+      <x>380</x>
+      <y>0</y>
+      <width>66</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>y-axis range</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+    <property name="indent">
+     <number>-1</number>
+    </property>
    </widget>
    <widget class="QPushButton" name="InitializeButton">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>10</y>
-      <width>75</width>
-      <height>22</height>
+      <x>630</x>
+      <y>0</y>
+      <width>60</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -135,10 +147,10 @@
    <widget class="QPushButton" name="CloseButton">
     <property name="geometry">
      <rect>
-      <x>980</x>
+      <x>700</x>
       <y>10</y>
-      <width>75</width>
-      <height>22</height>
+      <width>60</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -148,9 +160,9 @@
    <widget class="QComboBox" name="Range_comboBox">
     <property name="geometry">
      <rect>
-      <x>561</x>
-      <y>10</y>
-      <width>69</width>
+      <x>460</x>
+      <y>16</y>
+      <width>70</width>
       <height>22</height>
      </rect>
     </property>
@@ -226,35 +238,41 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>525</x>
-      <y>10</y>
-      <width>41</width>
-      <height>22</height>
+      <x>460</x>
+      <y>0</y>
+      <width>70</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Range</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>639</x>
-      <y>10</y>
-      <width>81</width>
-      <height>22</height>
+      <x>540</x>
+      <y>0</y>
+      <width>80</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Trigger Voltage</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QLineEdit" name="TriggerVoltage_lineEdit">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>10</y>
-      <width>41</width>
+      <x>560</x>
+      <y>16</y>
+      <width>40</width>
       <height>22</height>
      </rect>
     </property>
@@ -268,9 +286,9 @@
    <widget class="QLineEdit" name="yaxisRange_lineEdit">
     <property name="geometry">
      <rect>
-      <x>487</x>
-      <y>10</y>
-      <width>31</width>
+      <x>395</x>
+      <y>16</y>
+      <width>36</width>
       <height>22</height>
      </rect>
     </property>
@@ -281,10 +299,10 @@
    <widget class="QPushButton" name="GenerateWaveform_Button">
     <property name="geometry">
      <rect>
-      <x>1120</x>
-      <y>480</y>
-      <width>111</width>
-      <height>24</height>
+      <x>1110</x>
+      <y>530</y>
+      <width>120</width>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
@@ -294,9 +312,9 @@
    <widget class="QPushButton" name="Abort_Button">
     <property name="geometry">
      <rect>
-      <x>1260</x>
-      <y>480</y>
-      <width>75</width>
+      <x>1250</x>
+      <y>530</y>
+      <width>81</width>
       <height>24</height>
      </rect>
     </property>
@@ -307,8 +325,8 @@
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
-      <x>1180</x>
-      <y>520</y>
+      <x>1170</x>
+      <y>560</y>
       <width>118</width>
       <height>23</height>
      </rect>
@@ -321,7 +339,7 @@
     <property name="geometry">
      <rect>
       <x>1110</x>
-      <y>50</y>
+      <y>100</y>
       <width>221</width>
       <height>421</height>
      </rect>
@@ -333,7 +351,7 @@
         <string>PRF (Hz)</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -343,14 +361,14 @@
         <string>Amplitude (mVpp)</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
       <spacer name="verticalSpacer">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -363,7 +381,7 @@
      <item row="8" column="0">
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -399,7 +417,7 @@
         <string>Pulse Duration (ms)</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -416,7 +434,7 @@
      <item row="1" column="1">
       <spacer name="verticalSpacer_6">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -439,7 +457,7 @@
         <string>Duty Cycle (%)</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -456,7 +474,7 @@
      <item row="8" column="2">
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -469,7 +487,7 @@
      <item row="17" column="1">
       <spacer name="verticalSpacer_4">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -485,14 +503,14 @@
         <string>Frequency (Hz)</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
      <item row="13" column="1">
       <spacer name="verticalSpacer_3">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -518,14 +536,14 @@
         <string>Length (s)</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
      <item row="9" column="1">
       <spacer name="verticalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -548,7 +566,7 @@
      <item row="21" column="1">
       <spacer name="verticalSpacer_5">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -563,9 +581,9 @@
    <widget class="QLabel" name="SamplingInterval_label">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>200</x>
       <y>0</y>
-      <width>161</width>
+      <width>165</width>
       <height>16</height>
      </rect>
     </property>
@@ -576,14 +594,210 @@
    <widget class="QLabel" name="BlockDuration_label">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>200</x>
       <y>20</y>
-      <width>161</width>
+      <width>165</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Block duration = </string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_right_Button">
+    <property name="geometry">
+     <rect>
+      <x>1234</x>
+      <y>30</y>
+      <width>25</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>--&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_left_Button">
+    <property name="geometry">
+     <rect>
+      <x>1195</x>
+      <y>30</y>
+      <width>25</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;--</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_up_Button">
+    <property name="geometry">
+     <rect>
+      <x>1220</x>
+      <y>10</y>
+      <width>15</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>^</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_down_Button">
+    <property name="geometry">
+     <rect>
+      <x>1220</x>
+      <y>40</y>
+      <width>15</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>v</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_open_Button">
+    <property name="geometry">
+     <rect>
+      <x>1285</x>
+      <y>30</y>
+      <width>75</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Open Gantry</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_forward_Button">
+    <property name="geometry">
+     <rect>
+      <x>1264</x>
+      <y>10</y>
+      <width>15</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>F</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_backward_Button">
+    <property name="geometry">
+     <rect>
+      <x>1264</x>
+      <y>40</y>
+      <width>15</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>B</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="Gantry_DIR_comboBox">
+    <property name="geometry">
+     <rect>
+      <x>1082</x>
+      <y>6</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_Move_Button">
+    <property name="geometry">
+     <rect>
+      <x>1095</x>
+      <y>74</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Move</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>1167</x>
+      <y>35</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>mm</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>1167</x>
+      <y>55</y>
+      <width>35</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>mm/s</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="Gantry_distance_spinBox">
+    <property name="geometry">
+     <rect>
+      <x>1082</x>
+      <y>33</y>
+      <width>85</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>1</number>
+    </property>
+    <property name="value">
+     <double>0.100000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="Gantry_speed_spinBox">
+    <property name="geometry">
+     <rect>
+      <x>1082</x>
+      <y>54</y>
+      <width>85</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <double>10.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.100000000000000</double>
+    </property>
+    <property name="value">
+     <double>0.100000000000000</double>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_Stop_Button">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>74</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Stop</string>
     </property>
    </widget>
    <zorder>WaveformGenerator_GroupBox</zorder>
@@ -607,14 +821,28 @@
    <zorder>progressBar</zorder>
    <zorder>SamplingInterval_label</zorder>
    <zorder>BlockDuration_label</zorder>
+   <zorder>Gantry_right_Button</zorder>
+   <zorder>Gantry_left_Button</zorder>
+   <zorder>Gantry_up_Button</zorder>
+   <zorder>Gantry_down_Button</zorder>
+   <zorder>Gantry_open_Button</zorder>
+   <zorder>Gantry_forward_Button</zorder>
+   <zorder>Gantry_backward_Button</zorder>
+   <zorder>Gantry_DIR_comboBox</zorder>
+   <zorder>Gantry_Move_Button</zorder>
+   <zorder>label_12</zorder>
+   <zorder>label_13</zorder>
+   <zorder>Gantry_distance_spinBox</zorder>
+   <zorder>Gantry_speed_spinBox</zorder>
+   <zorder>Gantry_Stop_Button</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1364</width>
-     <height>22</height>
+     <width>1362</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

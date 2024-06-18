@@ -79,6 +79,15 @@
     <ClCompile Include="Stop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gantry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArduinoDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resources\ps4000.h">
@@ -93,6 +102,12 @@
       <Filter>Resource Files</Filter>
     </QtMoc>
     <QtMoc Include="WaveformGenerator.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Gantry.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ArduinoDevice.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
