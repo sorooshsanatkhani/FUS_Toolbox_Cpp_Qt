@@ -14,6 +14,7 @@
 	6. In project properties, Qt Project Settings -> General -> Build Config -> Release
 	7. In project properties, Qt Project Settings -> General -> Multi-processor Compilation -> Yes (/MP)
 	8. In project properties, C/C++ - > General -> Debug Information Format -> None
-	9. In project properties, C/C++ -> Optimization -> Optimization -> Maximum Optimization (Favor Size) (/O1)
+	9. In project properties, C/C++ -> Optimization -> Optimization -> Maximum Optimization (Favor Speed) (/O2)
 	10. In project properties, Linker -> Additional Dependencies -> Add these: ps4000.lib;visa64.lib
 	11. In project properties, Linker -> Debugging -> Generate Debug Info -> No
+	12. In project properties, C/C++ -> Code Generation -> Basic Runtime Checks -> Default
