@@ -604,7 +604,7 @@
      <string>Block duration = </string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Gantry_right_Button">
+   <widget class="QPushButton" name="Gantry_left_Button">
     <property name="geometry">
      <rect>
       <x>1234</x>
@@ -614,10 +614,14 @@
      </rect>
     </property>
     <property name="text">
-     <string>--&gt;</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="FUSMainWindow.qrc">
+      <normaloff>:/FUSMainWindow/Resources/Right.tif</normaloff>:/FUSMainWindow/Resources/Right.tif</iconset>
     </property>
    </widget>
-   <widget class="QPushButton" name="Gantry_left_Button">
+   <widget class="QPushButton" name="Gantry_right_Button">
     <property name="geometry">
      <rect>
       <x>1195</x>
@@ -627,7 +631,11 @@
      </rect>
     </property>
     <property name="text">
-     <string>&lt;--</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="FUSMainWindow.qrc">
+      <normaloff>:/FUSMainWindow/Resources/Left.tif</normaloff>:/FUSMainWindow/Resources/Left.tif</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_up_Button">
@@ -640,7 +648,11 @@
      </rect>
     </property>
     <property name="text">
-     <string>^</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="FUSMainWindow.qrc">
+      <normaloff>:/FUSMainWindow/Resources/Up.tif</normaloff>:/FUSMainWindow/Resources/Up.tif</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_down_Button">
@@ -653,7 +665,11 @@
      </rect>
     </property>
     <property name="text">
-     <string>v</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="FUSMainWindow.qrc">
+      <normaloff>:/FUSMainWindow/Resources/Down.tif</normaloff>:/FUSMainWindow/Resources/Down.tif</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_open_Button">
@@ -679,25 +695,33 @@
      <rect>
       <x>1264</x>
       <y>10</y>
-      <width>15</width>
-      <height>25</height>
+      <width>20</width>
+      <height>35</height>
      </rect>
     </property>
     <property name="text">
-     <string>F</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="FUSMainWindow.qrc">
+      <normaloff>:/FUSMainWindow/Resources/Forward.tif</normaloff>:/FUSMainWindow/Resources/Forward.tif</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_backward_Button">
     <property name="geometry">
      <rect>
       <x>1264</x>
-      <y>40</y>
-      <width>15</width>
-      <height>25</height>
+      <y>45</y>
+      <width>20</width>
+      <height>35</height>
      </rect>
     </property>
     <property name="text">
-     <string>B</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="FUSMainWindow.qrc">
+      <normaloff>:/FUSMainWindow/Resources/Backward.tif</normaloff>:/FUSMainWindow/Resources/Backward.tif</iconset>
     </property>
    </widget>
    <widget class="QComboBox" name="Gantry_DIR_comboBox">
@@ -821,8 +845,8 @@
    <zorder>progressBar</zorder>
    <zorder>SamplingInterval_label</zorder>
    <zorder>BlockDuration_label</zorder>
-   <zorder>Gantry_right_Button</zorder>
    <zorder>Gantry_left_Button</zorder>
+   <zorder>Gantry_right_Button</zorder>
    <zorder>Gantry_up_Button</zorder>
    <zorder>Gantry_down_Button</zorder>
    <zorder>Gantry_open_Button</zorder>

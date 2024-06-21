@@ -1,5 +1,11 @@
 <RCC>
-    <qresource prefix="FUSMainWindow">
-		<file>Resources/logo.ico</file>
+    <qresource prefix="/FUSMainWindow">
+        <file>Resources/logo.ico</file>
+        <file>Resources/Backward.tif</file>
+        <file>Resources/Down.tif</file>
+        <file>Resources/Forward.tif</file>
+        <file>Resources/Left.tif</file>
+        <file>Resources/Right.tif</file>
+        <file>Resources/Up.tif</file>
     </qresource>
 </RCC>
