@@ -15,7 +15,7 @@ byte ENA_FB_Pin = 10;
 
 byte TEST_Pin = 11;
 
-const int microsteps = 800; // 3200 microsteps per 10mm
+const int microsteps = 125; // 125 microsteps per 10mm
 
 volatile bool stopRequested = false; // Flag to signal stop
 
