@@ -44,14 +44,14 @@ void ArduinoDevice::close() {
 
 qint64 ArduinoDevice::write(char direction, float distance, float speed) {
     // Ensure distance and speed are within the specified range
-    distance = qBound(0.1f, distance, 100.0f);
-    speed = qBound(0.1f, speed, 10.0f);
+    distance = qBound(0.01f, distance, 100.0f);
+    speed = qBound(0.01f, speed, 10.0f);
 
     // Format the command as a string: "D,0.1,1.0\n"
     QLocale::setDefault(QLocale::C);
     QByteArray command = QByteArray(1, direction) + "," +
-        QByteArray::number(distance, 'f', 1) + "," + // One decimal place for distance
-        QByteArray::number(speed, 'f', 1) + "\n"; // One decimal place for speed
+        QByteArray::number(distance, 'f', 2) + "," + // Two decimal place for distance
+        QByteArray::number(speed, 'f', 2) + "\n"; // Two decimal place for speed
 
     // Send the command over the serial port
     return m_serialPort->write(command);
