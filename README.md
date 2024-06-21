@@ -1,6 +1,6 @@
-# FUS_Toolbox_Cpp_Qt
+# FUS_Toolbox_Cpp_Qt (Development Stage)
 
-## Setting up the project:
+## Setting up the project in visual studio:
 	1. Clone the repository
 	2. Make sure you have Qt installed on your system
 	3. Make sure Qt version is set in the project file correctly
