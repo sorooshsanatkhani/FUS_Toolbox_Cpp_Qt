@@ -49,8 +49,8 @@ void ArduinoDevice::close() {
 
 qint64 ArduinoDevice::write(char direction, float distance, float speed) {
     // Ensure distance and speed are within the specified range
-    distance = qBound(0.01f, distance, 100.0f);
-    speed = qBound(0.01f, speed, 10.0f);
+    distance = qBound(0.00f, distance, 100.00f);
+    speed = qBound(0.00f, speed, 10.00f);
 
     // Format the command as a string: "D,0.1,1.0\n"
     QLocale::setDefault(QLocale::C);

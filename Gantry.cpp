@@ -28,10 +28,10 @@ void Gantry::open_Click()
 void Gantry::move_Click(char Direction, float Distance, float Speed)
 {
     arduino->readSerialData();
-    Move(Direction, Distance, Speed); // Assuming Move(Direction) is implemented elsewhere in Gantry.cpp
+    Move(Direction, Distance, Speed);
 }
 void Gantry::stop_Click()
 {
 	arduino->readSerialData();
-    Move('S', '0', '0'); // Assuming Move(Direction) is implemented elsewhere in Gantry.cpp
+    Move('S', '0', '0');
 }
