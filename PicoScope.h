@@ -1,3 +1,8 @@
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 1 August, 2023
+// Last Modified : 26 October, 2023
+
 #ifndef PICOSCOPE_H  // Include guard to prevent multiple inclusions
 #define PICOSCOPE_H
 

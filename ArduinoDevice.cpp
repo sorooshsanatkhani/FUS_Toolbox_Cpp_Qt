@@ -1,3 +1,8 @@
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 21 June, 2024
+// Last Modified : 21 June, 2024
+
 #include "stdafx.h"
 #include "ArduinoDevice.h"
 #include <QDebug>

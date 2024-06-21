@@ -1,3 +1,8 @@
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 21 June, 2024
+// Last Modified : 21 June, 2024
+
 #ifndef ARDUINODEVICE_H
 #define ARDUINODEVICE_H
 

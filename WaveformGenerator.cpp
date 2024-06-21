@@ -1,3 +1,8 @@
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 1 August, 2023
+// Last Modified : 21 June, 2024
+
 #include "stdafx.h"
 #include "WaveformGenerator.h"
 #include "FUSMainWindow.h"

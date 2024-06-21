@@ -1,3 +1,8 @@
+// Author: Soroosh Sanatkhani
+// Columbia University
+// Created: 1 August, 2023
+// Last Modified : 21 June, 2024
+
 #pragma once  // Ensures the header file is included only once in a single compilation
 
 #include <QtWidgets/QMainWindow>  // Includes QMainWindow which provides a main application window
