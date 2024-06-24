@@ -42,9 +42,7 @@ void Gantry::Move(char Direction, float Distance, float Speed)
 	// Add the command to the queue instead of sending it directly
 	commandQueue.push(std::make_tuple(Direction, Distance, Speed));
 	// Attempt to process the next command in the queue if not already processing
-	if (ackReceived) {
-		processCommandQueue();
-	}
+	processCommandQueue();
 
 	// Update UI elements with the new position
 	fus_mainwindow->ui.Gantry_x_spinBox->setValue(gantryPosition.x);

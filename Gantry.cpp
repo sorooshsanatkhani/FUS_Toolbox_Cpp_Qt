@@ -12,11 +12,10 @@ Gantry::Gantry(FUSMainWindow* parent) :
     fus_mainwindow(parent),
     arduino(new ArduinoDevice("COM3", fus_mainwindow)),
     gantryPosition({ 0, 0, 0 }),
-    gantriGoToPosition({ 0, 0, 0 }),
-	ackReceived(true)
+    gantriGoToPosition({ 0, 0, 0 })
 {
-    // Connect the ArduinoDevice's serialDataReceived signal to the FUSMainWindow's emitPrintSignal slot
-    connect(arduino, &ArduinoDevice::serialDataReceived, fus_mainwindow, &FUSMainWindow::emitPrintSignal);
+	// Connect the ArduinoDevice's acknowledgmentReceived signal to this Gantry's slot
+	connect(arduino, &ArduinoDevice::acknowledgmentReceived, this, &Gantry::onAcknowledgmentReceived);
 
 	waitTimer = new QTimer(this);
 	connect(waitTimer, &QTimer::timeout, this, &Gantry::onWaitTimerTimeout);
@@ -31,7 +30,6 @@ void Gantry::open()
 {
     arduino->open();
 	arduino->write('O', 0, 0);	// sending 'O' as open signal to turn on the motors
-    arduino->readSerialData();
 }
 
 void Gantry::close()
@@ -42,7 +40,6 @@ void Gantry::close()
 
 void Gantry::move_Click(char Direction, float Distance, float Speed)
 {
-    arduino->readSerialData();
     Move(Direction, Distance, Speed);
 }
 
@@ -51,7 +48,6 @@ void Gantry::stop_Click()
 	std::queue<std::tuple<char, float, float>> empty;
 	std::swap(commandQueue, empty); // Clear the command queue
 	arduino->write('S', 0, 0); // Send stop command immediately
-	ackReceived = true; // Allow new commands
 }
 
 void Gantry::setOrigin()
@@ -123,19 +119,23 @@ void Gantry::MoveTo()
 }
 
 void Gantry::processCommandQueue() {
-	if (commandQueue.empty() || !ackReceived) {
+	if (commandQueue.empty()) {
 		return;
 	}
 	auto [Direction, Distance, Speed] = commandQueue.front();
 	commandQueue.pop();
 	arduino->write(Direction, Distance, Speed);
-	ackReceived = false;
 	waitTimer->start(100); // Start the timer to wait for acknowledgment
+}
+
+void Gantry::onAcknowledgmentReceived()
+{
+	waitTimer->stop(); // Stop the timer as acknowledgment is received
+	processCommandQueue(); // Attempt to process the next command in the queue
 }
 
 void Gantry::onWaitTimerTimeout()
 {
 	qDebug() << "Timeout waiting for acknowledgment from Arduino.";
-	ackReceived = true; // Assume the command was lost and allow the next command to proceed
 	processCommandQueue(); // Attempt to process the next command in the queue
 }

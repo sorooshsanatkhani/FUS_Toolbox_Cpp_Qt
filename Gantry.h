@@ -48,15 +48,13 @@ public:
 
 public slots:
 	void onWaitTimerTimeout();
+	void onAcknowledgmentReceived();  // Slot to handle acknowledgment received signal
 
 private:
 	FUSMainWindow* fus_mainwindow;  // Pointer to the main window
 	ArduinoDevice* arduino;
 
 	QTimer* waitTimer;
-	bool ackReceived;
 	std::queue<std::tuple<char, float, float>> commandQueue;
-
-	void checkForAck();
 };
 #endif // GANTRY_H
