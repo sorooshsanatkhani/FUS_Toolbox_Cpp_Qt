@@ -107,5 +107,8 @@ void ArduinoDevice::readSerialData() {
         QString data = QString::fromUtf8(line.trimmed()); // Convert to QString and remove any trailing newline
         qDebug() << "Received:" << data;
         fus_mainwindow->emitPrintSignal(data);
+        if (data == "ACK") {
+            emit acknowledgmentReceived(); // Emit signal indicating an ACK was received
+        }
     }
 }
