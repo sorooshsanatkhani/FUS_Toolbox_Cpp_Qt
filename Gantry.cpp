@@ -52,7 +52,6 @@ void Gantry::stop_Click()
 	std::swap(commandQueue, empty); // Clear the command queue
 	arduino->write('S', 0, 0); // Send stop command immediately
 	ackReceived = true; // Allow new commands
-	arduino->readSerialData();
 }
 
 void Gantry::setOrigin()
@@ -131,6 +130,7 @@ void Gantry::processCommandQueue() {
 	commandQueue.pop();
 	arduino->write(Direction, Distance, Speed);
 	ackReceived = false;
+	waitTimer->start(100); // Start the timer to wait for acknowledgment
 }
 
 void Gantry::onWaitTimerTimeout()

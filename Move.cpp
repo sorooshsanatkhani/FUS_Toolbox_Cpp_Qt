@@ -39,13 +39,16 @@ void Gantry::Move(char Direction, float Distance, float Speed)
 			fus_mainwindow->emitPrintSignal("Going backward");
 			break;
 	}
-	arduino->write(Direction, Distance, Speed);
-	ackReceived = false;
-	waitTimer->start(100);
+	// Add the command to the queue instead of sending it directly
 	commandQueue.push(std::make_tuple(Direction, Distance, Speed));
-	processCommandQueue();
+	// Attempt to process the next command in the queue if not already processing
+	if (ackReceived) {
+		processCommandQueue();
+	}
+
+	// Update UI elements with the new position
 	fus_mainwindow->ui.Gantry_x_spinBox->setValue(gantryPosition.x);
 	fus_mainwindow->ui.Gantry_y_spinBox->setValue(gantryPosition.y);
 	fus_mainwindow->ui.Gantry_z_spinBox->setValue(gantryPosition.z);
-	fus_mainwindow->emitPrintSignal("position updated");
+	fus_mainwindow->emitPrintSignal("Position updated");
 }
