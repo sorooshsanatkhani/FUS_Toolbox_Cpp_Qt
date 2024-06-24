@@ -11,6 +11,8 @@
 #include <QObject>  // Includes the QObject class for creating custom Qt objects
 #include <QTimer>  // Includes the QTimer class for creating timers
 #include "ArduinoDevice.h"
+#include <queue>
+#include <tuple>
 
 class FUSMainWindow;
 
@@ -42,6 +44,8 @@ public:
 	void returnToOrigin();
 	void MoveTo();
 
+	void processCommandQueue();
+
 public slots:
 	void onWaitTimerTimeout();
 
@@ -50,7 +54,8 @@ private:
 	ArduinoDevice* arduino;
 
 	QTimer* waitTimer;
-	bool ackRecieved;
+	bool ackReceived;
+	std::queue<std::tuple<char, float, float>> commandQueue;
 
 	void checkForAck();
 };

@@ -13,7 +13,7 @@ Gantry::Gantry(FUSMainWindow* parent) :
     arduino(new ArduinoDevice("COM3", fus_mainwindow)),
     gantryPosition({ 0, 0, 0 }),
     gantriGoToPosition({ 0, 0, 0 }),
-	ackRecieved(false)
+	ackReceived(true)
 {
     // Connect the ArduinoDevice's serialDataReceived signal to the FUSMainWindow's emitPrintSignal slot
     connect(arduino, &ArduinoDevice::serialDataReceived, fus_mainwindow, &FUSMainWindow::emitPrintSignal);
@@ -48,9 +48,11 @@ void Gantry::move_Click(char Direction, float Distance, float Speed)
 
 void Gantry::stop_Click()
 {
-	waitTimer->stop(); // Stop the waiting process
+	std::queue<std::tuple<char, float, float>> empty;
+	std::swap(commandQueue, empty); // Clear the command queue
+	arduino->write('S', 0, 0); // Send stop command immediately
+	ackReceived = true; // Allow new commands
 	arduino->readSerialData();
-    Move('S', '0', '0');
 }
 
 void Gantry::setOrigin()
@@ -121,13 +123,19 @@ void Gantry::MoveTo()
 	}
 }
 
+void Gantry::processCommandQueue() {
+	if (commandQueue.empty() || !ackReceived) {
+		return;
+	}
+	auto [Direction, Distance, Speed] = commandQueue.front();
+	commandQueue.pop();
+	arduino->write(Direction, Distance, Speed);
+	ackReceived = false;
+}
+
 void Gantry::onWaitTimerTimeout()
 {
-	if (ackRecieved) {
-		waitTimer->stop();
-		// Proceed with updating the position and UI...
-	}
-	else {
-		// Optionally, emit a signal or log that we're still waiting for acknowledgment
-	}
+	qDebug() << "Timeout waiting for acknowledgment from Arduino.";
+	ackReceived = true; // Assume the command was lost and allow the next command to proceed
+	processCommandQueue(); // Attempt to process the next command in the queue
 }

@@ -40,8 +40,10 @@ void Gantry::Move(char Direction, float Distance, float Speed)
 			break;
 	}
 	arduino->write(Direction, Distance, Speed);
-	ackRecieved = false;
+	ackReceived = false;
 	waitTimer->start(100);
+	commandQueue.push(std::make_tuple(Direction, Distance, Speed));
+	processCommandQueue();
 	fus_mainwindow->ui.Gantry_x_spinBox->setValue(gantryPosition.x);
 	fus_mainwindow->ui.Gantry_y_spinBox->setValue(gantryPosition.y);
 	fus_mainwindow->ui.Gantry_z_spinBox->setValue(gantryPosition.z);
