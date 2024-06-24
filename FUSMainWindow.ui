@@ -53,12 +53,15 @@
      <rect>
       <x>10</x>
       <y>16</y>
-      <width>65</width>
+      <width>80</width>
       <height>22</height>
      </rect>
     </property>
     <property name="maximum">
      <number>50</number>
+    </property>
+    <property name="value">
+     <number>0</number>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -66,7 +69,7 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>65</width>
+      <width>80</width>
       <height>16</height>
      </rect>
     </property>
@@ -80,9 +83,9 @@
    <widget class="QSpinBox" name="Buffer_spinBox">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>95</x>
       <y>16</y>
-      <width>110</width>
+      <width>125</width>
       <height>22</height>
      </rect>
     </property>
@@ -99,9 +102,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>95</x>
       <y>0</y>
-      <width>110</width>
+      <width>125</width>
       <height>16</height>
      </rect>
     </property>
@@ -115,7 +118,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>385</x>
       <y>0</y>
       <width>66</width>
       <height>16</height>
@@ -147,10 +150,10 @@
    <widget class="QPushButton" name="CloseButton">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>10</y>
-      <width>60</width>
-      <height>20</height>
+      <x>690</x>
+      <y>5</y>
+      <width>70</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
@@ -163,7 +166,7 @@
       <x>460</x>
       <y>16</y>
       <width>70</width>
-      <height>22</height>
+      <height>24</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -286,7 +289,7 @@
    <widget class="QLineEdit" name="yaxisRange_lineEdit">
     <property name="geometry">
      <rect>
-      <x>395</x>
+      <x>400</x>
       <y>16</y>
       <width>36</width>
       <height>22</height>
@@ -339,9 +342,9 @@
     <property name="geometry">
      <rect>
       <x>1110</x>
-      <y>100</y>
+      <y>145</y>
       <width>221</width>
-      <height>421</height>
+      <height>381</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="WaveformGenerator_gridLayout">
@@ -581,7 +584,7 @@
    <widget class="QLabel" name="SamplingInterval_label">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>220</x>
       <y>0</y>
       <width>165</width>
       <height>16</height>
@@ -594,7 +597,7 @@
    <widget class="QLabel" name="BlockDuration_label">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>220</x>
       <y>20</y>
       <width>165</width>
       <height>16</height>
@@ -604,11 +607,14 @@
      <string>Block duration = </string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Gantry_left_Button">
+   <widget class="QPushButton" name="Gantry_right_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1234</x>
-      <y>30</y>
+      <y>20</y>
       <width>25</width>
       <height>20</height>
      </rect>
@@ -621,11 +627,14 @@
       <normaloff>:/FUSMainWindow/Resources/Right.tif</normaloff>:/FUSMainWindow/Resources/Right.tif</iconset>
     </property>
    </widget>
-   <widget class="QPushButton" name="Gantry_right_Button">
+   <widget class="QPushButton" name="Gantry_left_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1195</x>
-      <y>30</y>
+      <y>20</y>
       <width>25</width>
       <height>20</height>
      </rect>
@@ -639,10 +648,13 @@
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_up_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1220</x>
-      <y>10</y>
+      <y>0</y>
       <width>15</width>
       <height>25</height>
      </rect>
@@ -656,10 +668,13 @@
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_down_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1220</x>
-      <y>40</y>
+      <y>30</y>
       <width>15</width>
       <height>25</height>
      </rect>
@@ -672,31 +687,16 @@
       <normaloff>:/FUSMainWindow/Resources/Down.tif</normaloff>:/FUSMainWindow/Resources/Down.tif</iconset>
     </property>
    </widget>
-   <widget class="QPushButton" name="Gantry_open_Button">
-    <property name="geometry">
-     <rect>
-      <x>1285</x>
-      <y>30</y>
-      <width>75</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>8</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Open Gantry</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="Gantry_forward_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>1264</x>
-      <y>10</y>
+      <x>1260</x>
+      <y>0</y>
       <width>20</width>
-      <height>35</height>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
@@ -708,12 +708,15 @@
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_backward_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>1264</x>
-      <y>45</y>
+      <x>1260</x>
+      <y>30</y>
       <width>20</width>
-      <height>35</height>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
@@ -725,6 +728,9 @@
     </property>
    </widget>
    <widget class="QComboBox" name="Gantry_DIR_comboBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1082</x>
@@ -734,13 +740,16 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="Gantry_Move_Button">
+   <widget class="QPushButton" name="Gantry_move_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>1095</x>
+      <x>1082</x>
       <y>74</y>
-      <width>60</width>
-      <height>20</height>
+      <width>40</width>
+      <height>24</height>
      </rect>
     </property>
     <property name="text">
@@ -774,6 +783,9 @@
     </property>
    </widget>
    <widget class="QDoubleSpinBox" name="Gantry_distance_spinBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1082</x>
@@ -790,6 +802,9 @@
     </property>
    </widget>
    <widget class="QDoubleSpinBox" name="Gantry_speed_spinBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1082</x>
@@ -811,17 +826,313 @@
      <double>1.000000000000000</double>
     </property>
    </widget>
-   <widget class="QPushButton" name="Gantry_Stop_Button">
+   <widget class="QPushButton" name="Gantry_stop_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>1170</x>
+      <x>1122</x>
       <y>74</y>
-      <width>60</width>
-      <height>20</height>
+      <width>40</width>
+      <height>24</height>
      </rect>
     </property>
     <property name="text">
      <string>Stop</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>1255</x>
+      <y>70</y>
+      <width>15</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>85</red>
+          <green>85</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>85</red>
+          <green>85</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled/>
+     </palette>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>x</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>1255</x>
+      <y>95</y>
+      <width>15</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled/>
+     </palette>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>y</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>1255</x>
+      <y>120</y>
+      <width>15</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>z</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_set_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1280</x>
+      <y>22</y>
+      <width>30</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Set</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_17">
+    <property name="geometry">
+     <rect>
+      <x>1210</x>
+      <y>90</y>
+      <width>40</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="FUSMainWindow.qrc">:/FUSMainWindow/Resources/Coordinates.tif</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+    <property name="indent">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_movetoposition_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1290</x>
+      <y>48</y>
+      <width>60</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Move To</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_onoff_Button">
+    <property name="geometry">
+     <rect>
+      <x>1164</x>
+      <y>0</y>
+      <width>30</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>OFF</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_return_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1315</x>
+      <y>22</y>
+      <width>45</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Return</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="Gantry_x_spinBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1270</x>
+      <y>70</y>
+      <width>60</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>1</number>
+    </property>
+    <property name="minimum">
+     <double>-300.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>300.000000000000000</double>
+    </property>
+    <property name="stepType">
+     <enum>QAbstractSpinBox::StepType::AdaptiveDecimalStepType</enum>
+    </property>
+    <property name="value">
+     <double>0.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="Gantry_y_spinBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1270</x>
+      <y>95</y>
+      <width>60</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>1</number>
+    </property>
+    <property name="minimum">
+     <double>-300.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>300.000000000000000</double>
+    </property>
+    <property name="stepType">
+     <enum>QAbstractSpinBox::StepType::AdaptiveDecimalStepType</enum>
+    </property>
+    <property name="value">
+     <double>0.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="Gantry_z_spinBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1270</x>
+      <y>120</y>
+      <width>60</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>1</number>
+    </property>
+    <property name="minimum">
+     <double>-300.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>300.000000000000000</double>
+    </property>
+    <property name="stepType">
+     <enum>QAbstractSpinBox::StepType::AdaptiveDecimalStepType</enum>
+    </property>
+    <property name="value">
+     <double>0.000000000000000</double>
     </property>
    </widget>
    <zorder>WaveformGenerator_GroupBox</zorder>
@@ -845,20 +1156,30 @@
    <zorder>progressBar</zorder>
    <zorder>SamplingInterval_label</zorder>
    <zorder>BlockDuration_label</zorder>
-   <zorder>Gantry_left_Button</zorder>
    <zorder>Gantry_right_Button</zorder>
+   <zorder>Gantry_left_Button</zorder>
    <zorder>Gantry_up_Button</zorder>
    <zorder>Gantry_down_Button</zorder>
-   <zorder>Gantry_open_Button</zorder>
    <zorder>Gantry_forward_Button</zorder>
    <zorder>Gantry_backward_Button</zorder>
    <zorder>Gantry_DIR_comboBox</zorder>
-   <zorder>Gantry_Move_Button</zorder>
+   <zorder>Gantry_move_Button</zorder>
    <zorder>label_12</zorder>
    <zorder>label_13</zorder>
    <zorder>Gantry_distance_spinBox</zorder>
    <zorder>Gantry_speed_spinBox</zorder>
-   <zorder>Gantry_Stop_Button</zorder>
+   <zorder>Gantry_stop_Button</zorder>
+   <zorder>label_14</zorder>
+   <zorder>label_15</zorder>
+   <zorder>label_16</zorder>
+   <zorder>Gantry_set_Button</zorder>
+   <zorder>label_17</zorder>
+   <zorder>Gantry_movetoposition_Button</zorder>
+   <zorder>Gantry_onoff_Button</zorder>
+   <zorder>Gantry_return_Button</zorder>
+   <zorder>Gantry_x_spinBox</zorder>
+   <zorder>Gantry_y_spinBox</zorder>
+   <zorder>Gantry_z_spinBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

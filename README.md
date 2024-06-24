@@ -5,7 +5,7 @@
 	2. Make sure you have Qt installed on your system
 	3. Make sure Qt version is set in the project file correctly
 	4. Make sure all the Qt modules are selected in the project properties (Qt Serial Port might be unselected)
-		core;gui;widgets;printsupport;serialport;charts;datavisualization;designer;uitools;uiplugin
+		core;gui;widgets;printsupport;serialport;charts;datavisualization;designer;uitools;uiplugin;statemachine
 	5. Make sure the Pico SDK is installed on your system.
 		5.1. In prooject properties, C/C++ -> General -> Additional Include Directories, add the path to the Pico SDK
 		5.2. In project properties, C/C++ -> General -> Additional Include Directories, add the path to the Resources folder in the project directory

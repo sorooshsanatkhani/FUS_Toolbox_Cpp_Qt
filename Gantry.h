@@ -14,6 +14,13 @@
 
 class FUSMainWindow;
 
+struct Position3D
+{
+	float x;
+	float y;
+	float z;
+};
+
 class Gantry : public QObject
 {
 	Q_OBJECT  // Macro to enable the use of signals and slots
@@ -22,12 +29,18 @@ public:
 	explicit Gantry(FUSMainWindow* parent = nullptr);  // Constructor
 	~Gantry();  // Destructor
 
+	Position3D gantryPosition, gantriGoToPosition;
+
 	void Move(char,float,float);
 
-	void open_Click();
+	void open();
+	void close();
 
 	void move_Click(char,float,float);
 	void stop_Click();
+	void setOrigin();
+	void returnToOrigin();
+	void MoveTo();
 
 private:
 	FUSMainWindow* fus_mainwindow;  // Pointer to the main window

@@ -24,6 +24,7 @@ public:
 
 signals:
     void serialDataReceived(const QString& data);
+    void portOpened(bool success);
 
 public slots:
     void readSerialData();

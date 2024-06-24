@@ -45,7 +45,17 @@ void setup() {
 void loop() {
   if (Serial.available() > 0) {
     String receivedData = Serial.readStringUntil('\n');
-    if (receivedData.charAt(0) == 'S') { // Check if the received data is the stop command
+    if (receivedData.charAt(0) == 'O') { // Check if the received data is the ON command
+      digitalWrite(ENA_LR_Pin, LOW);
+      digitalWrite(ENA_UD_Pin, LOW);
+      digitalWrite(ENA_FB_Pin, LOW);
+    }
+    else if (receivedData.charAt(0) == 'C') { // Check if the received data is the OFF command
+      digitalWrite(ENA_LR_Pin, HIGH);
+      digitalWrite(ENA_UD_Pin, HIGH);
+      digitalWrite(ENA_FB_Pin, HIGH);
+    }
+    else if (receivedData.charAt(0) == 'S') { // Check if the received data is the stop command
       stopRequested = true; // Set the stop flag
     }
     else {
@@ -75,7 +85,7 @@ void loop() {
       Serial.println(" microseconds");
       // Control Left-Right movement
       if (direction == 'L' || direction == 'R') {
-        controlStepper(DIR_LR_Pin, PUL_LR_Pin, ENA_LR_Pin, direction == 'R', steps, HalfPeriod);
+        controlStepper(DIR_LR_Pin, PUL_LR_Pin, ENA_LR_Pin, direction == 'L', steps, HalfPeriod);
       }
       // Control Up-Down movement
       else if (direction == 'U' || direction == 'D') {
@@ -94,13 +104,12 @@ void loop() {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 void controlStepper(byte dirPin, byte pulPin, byte enaPin, bool direction, long steps, long HalfPeriod) {
   digitalWrite(dirPin, direction ? HIGH : LOW); // Set direction
-  digitalWrite(enaPin, LOW); // Enable motor
   delay(300); //minimum enable time is 200ms
   for (long i = 0; i < steps; i++) {
     if (Serial.available() > 0) {
       String receivedData = Serial.readStringUntil('\n');
       if (receivedData.charAt(0) == 'S') { // If stop command is received
-        digitalWrite(enaPin, HIGH); // Disable motor immediately
+        digitalWrite(pulPin, LOW); // Disable motor immediately
         return; // Exit the function
       }
     }
@@ -109,13 +118,11 @@ void controlStepper(byte dirPin, byte pulPin, byte enaPin, bool direction, long 
     digitalWrite(pulPin, LOW);
     delayMicroseconds(HalfPeriod);
   }
-  digitalWrite(enaPin, HIGH); // Disable motor after operation
-
 }
 
 void stopMotors() {
-  // Disable all motors
-  digitalWrite(ENA_LR_Pin, HIGH);
-  digitalWrite(ENA_UD_Pin, HIGH);
-  digitalWrite(ENA_FB_Pin, HIGH);
+  // Stop all motors
+  digitalWrite(PUL_LR_Pin, LOW);
+  digitalWrite(PUL_UD_Pin, LOW);
+  digitalWrite(PUL_FB_Pin, LOW);
 }

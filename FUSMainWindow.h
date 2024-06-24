@@ -12,6 +12,9 @@
 #include "WaveformGenerator.h"
 #include "Gantry.h"
 #include <QProgressBar>
+#include <QStateMachine>
+#include <QState>
+#include <QSignalTransition>
 
 // Declares the FUSMainWindow class as a subclass of QMainWindow
 class FUSMainWindow : public QMainWindow
@@ -21,6 +24,7 @@ class FUSMainWindow : public QMainWindow
 public:
     FUSMainWindow(QWidget* parent = nullptr);  // Constructor
     ~FUSMainWindow();  // Destructor
+    Ui::FUSMainWindowClass ui;  // Instance of the UI class
 
     void populateDIRComboBox(); // Method to populate the combo box
 
@@ -31,6 +35,7 @@ public:
     int getYaxisRangeValue();  // Getter for the value of yaxisRange_lineEdit
     uint16_t getRangeValue();  // Getter for the value of Range_comboBox
     uint16_t getTriggerVoltageValue();  // Getter for the value of TriggerVoltage_lineEdit
+
     /////// Waveform Generator
     unsigned int getFrequencyValue();
     unsigned int getAmplitudeValue();
@@ -38,6 +43,9 @@ public:
     unsigned int getDutyCycleValue();
     unsigned int getPRFValue();
     unsigned int getLengthValue();
+
+public slots:
+    void handlePortOpened(bool opened);
 
 signals:
     void printSignal(const QString& text);  // Signal to print text
@@ -62,7 +70,6 @@ private slots:
     void handleAbortButton();
     
     // Gantry System Functions
-    void handleGantry_open_ButtonClicked();
     void handleGantry_right_ButtonClicked();
     void handleGantry_left_ButtonClicked();
     void handleGantry_up_ButtonClicked();
@@ -71,9 +78,14 @@ private slots:
     void handleGantry_backward_ButtonClicked();
     void handleGantry_move_ButtonClicked();
     void handleGantry_stop_ButtonClicked();
+    // Gantry ON/OFF Toggle Button
+    void setupGantryToggleButton(); // Setup method for the Gantry ON/OFF toggle button
+    void handleGantryToggleButtonClicked(); // Slot to handle Gantry ON/OFF button clicks
+    void handleGantry_set_ButtonClicked();
+    void handleGantry_return_ButtonClicked();
+    void handleGantry_movetoposition_ButtonClicked();
 
 private:
-    Ui::FUSMainWindowClass ui;  // Instance of the UI class
     PicoScope* picoScope;  // Pointer to a PicoScope object
     WaveformGenerator* waveformgenerator;
     Gantry* gantry;

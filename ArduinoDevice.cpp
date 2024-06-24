@@ -18,6 +18,7 @@ ArduinoDevice::ArduinoDevice(const QString& portName, FUSMainWindow* mainWindow)
     m_serialPort->setFlowControl(QSerialPort::NoFlowControl);
 
     connect(m_serialPort, &QSerialPort::readyRead, this, &ArduinoDevice::readSerialData);
+    connect(this, &ArduinoDevice::portOpened, fus_mainwindow, &FUSMainWindow::handlePortOpened);
 }
 
 ArduinoDevice::~ArduinoDevice() {
@@ -31,11 +32,30 @@ bool ArduinoDevice::open() {
     if (m_serialPort->open(QIODevice::ReadWrite)) {
         qDebug() << "Opened port" << m_serialPort->portName();
         fus_mainwindow->emitPrintSignal("Arduino port opened!");
+        emit portOpened(true); // Emit signal indicating success
+        fus_mainwindow->ui.Gantry_DIR_comboBox->setEnabled(true);
+        fus_mainwindow->ui.Gantry_distance_spinBox->setEnabled(true);
+        fus_mainwindow->ui.Gantry_speed_spinBox->setEnabled(true);
+        fus_mainwindow->ui.Gantry_move_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_stop_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_set_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_return_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_movetoposition_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_right_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_left_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_up_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_down_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_forward_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_backward_Button->setEnabled(true);
+        fus_mainwindow->ui.Gantry_x_spinBox->setEnabled(true);
+        fus_mainwindow->ui.Gantry_y_spinBox->setEnabled(true);
+        fus_mainwindow->ui.Gantry_z_spinBox->setEnabled(true);
         return true;
     }
     else {
         qDebug() << "Failed to open port" << m_serialPort->portName();
         fus_mainwindow->emitPrintSignal("Failed to open Arduino port!");
+        emit portOpened(false); // Emit signal indicating failure
         return false;
     }
 }
@@ -44,6 +64,25 @@ void ArduinoDevice::close() {
     if (m_serialPort->isOpen()) {
         m_serialPort->close();
         qDebug() << "Closed port" << m_serialPort->portName();
+        fus_mainwindow->emitPrintSignal("Arduino port closed!");
+        fus_mainwindow->ui.Gantry_onoff_Button->setText("OFF");
+        fus_mainwindow->ui.Gantry_DIR_comboBox->setEnabled(false);
+        fus_mainwindow->ui.Gantry_distance_spinBox->setEnabled(false);
+        fus_mainwindow->ui.Gantry_speed_spinBox->setEnabled(false);
+        fus_mainwindow->ui.Gantry_move_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_stop_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_set_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_return_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_movetoposition_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_right_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_left_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_up_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_down_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_forward_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_backward_Button->setEnabled(false);
+        fus_mainwindow->ui.Gantry_x_spinBox->setEnabled(false);
+        fus_mainwindow->ui.Gantry_y_spinBox->setEnabled(false);
+        fus_mainwindow->ui.Gantry_z_spinBox->setEnabled(false);
     }
 }
 

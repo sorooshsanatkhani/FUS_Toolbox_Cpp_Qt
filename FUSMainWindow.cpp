@@ -25,12 +25,12 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
     this->setWindowIcon(QIcon(":/FUSMainWindow/Resources/logo.ico"));
     ui.verticalLayout->addWidget(picoScope->getCustomPlot());
 
-    populateDIRComboBox(); // Now populate the combo box
+    populateDIRComboBox(); // Now populate the combo box for the Gantry system direction
 
     // Connections
     connectSignalsAndSlots();
 
-    // Initialize the progress bar
+    // Initialize the progress bar for the waveform generation
     progressBar = ui.progressBar;
 
     // Initialize completionTimer
@@ -40,6 +40,9 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
     ui.CloseButton->setEnabled(false);
 
     ui.Abort_Button->setEnabled(false);
+
+    // ON/OFF toggle Button Setup for the Gantry system using existing Gantry_ONOFF_Button
+    setupGantryToggleButton();
 }
 
 // Defines the destructor of the FUSMainWindow class
@@ -87,18 +90,17 @@ void FUSMainWindow::connectSignalsAndSlots()
     connect(ui.Abort_Button, &QPushButton::clicked, this, &FUSMainWindow::handleAbortButton);
 
     // Connects the UI parts related to Gantry system to their respective slots
-    connect(ui.Gantry_open_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_open_ButtonClicked);
     connect(ui.Gantry_right_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_right_ButtonClicked);
     connect(ui.Gantry_left_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_left_ButtonClicked);
     connect(ui.Gantry_up_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_up_ButtonClicked);
     connect(ui.Gantry_down_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_down_ButtonClicked);
     connect(ui.Gantry_forward_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_forward_ButtonClicked);
     connect(ui.Gantry_backward_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_backward_ButtonClicked);
-    //connect(ui.Gantry_DIR_comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FUSMainWindow::handleSpinBox_Travel_ValueChanged);
-    //connect(ui.Gantry_distance_spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FUSMainWindow::handleSpinBox_Travel_ValueChanged);
-    //connect(ui.Gantry_speed_spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FUSMainWindow::handleSpinBox_Travel_ValueChanged);
-    connect(ui.Gantry_Move_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_move_ButtonClicked);
-    connect(ui.Gantry_Stop_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_stop_ButtonClicked);
+    connect(ui.Gantry_move_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_move_ButtonClicked);
+    connect(ui.Gantry_stop_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_stop_ButtonClicked);
+    connect(ui.Gantry_set_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_set_ButtonClicked);
+    connect(ui.Gantry_return_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_return_ButtonClicked);
+    connect(ui.Gantry_movetoposition_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_movetoposition_ButtonClicked);
 }
 
 // Defines the updateTextBox slot
@@ -322,14 +324,56 @@ void FUSMainWindow::handleAbortButton()
 }
 ////////////////////////////////////////////////
 /////// Gantry System /////////
+// Setup for the Gantry ON/OFF toggle button
+void FUSMainWindow::setupGantryToggleButton()
+{
+    QStateMachine* machine = new QStateMachine(this);
+
+    QState* offState = new QState(machine);
+    offState->assignProperty(ui.Gantry_onoff_Button, "text", "OFF");
+
+    QState* onState = new QState(machine);
+    onState->assignProperty(ui.Gantry_onoff_Button, "text", "ON");
+
+    // Transitions
+    //offState->addTransition(ui.Gantry_onoff_Button, &QPushButton::clicked, onState);
+    //onState->addTransition(ui.Gantry_onoff_Button, &QPushButton::clicked, offState);
+
+    machine->setInitialState(offState);
+    machine->start();
+
+    // Connect the Gantry_onoff_Button's clicked signal to a slot to perform actions on toggle
+    connect(ui.Gantry_onoff_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantryToggleButtonClicked);
+}
+// Slot for handling Gantry_onoff_Button clicks (if needed)
+void FUSMainWindow::handleGantryToggleButtonClicked()
+{
+
+    // Check the current text of the toggle button to determine its state
+    if (ui.Gantry_onoff_Button->text() == "ON") {
+        // If the button is in the ON state, call the close method
+        gantry->close();
+    }
+    else {
+        // If the button is in the OFF state, call the open method
+        gantry->open();
+    }
+}
+
+void FUSMainWindow::handlePortOpened(bool opened)
+{
+    if (opened) {
+        ui.Gantry_onoff_Button->setText("ON");
+        // Enable other UI components as needed
+    }
+    else {
+        ui.Gantry_onoff_Button->setText("OFF");
+        // Disable other UI components as needed
+    }
+}
 void FUSMainWindow::populateDIRComboBox() {
     QStringList options = { "Right", "Left", "Up", "Down", "Forward", "Backward"};
     ui.Gantry_DIR_comboBox->addItems(options);
-}
-
-void FUSMainWindow::handleGantry_open_ButtonClicked()
-{
-	gantry->open_Click();
 }
 void FUSMainWindow::handleGantry_right_ButtonClicked()
 {
@@ -362,4 +406,22 @@ void FUSMainWindow::handleGantry_move_ButtonClicked()
 void FUSMainWindow::handleGantry_stop_ButtonClicked()
 {
 	gantry->stop_Click();
+}
+void FUSMainWindow::handleGantry_set_ButtonClicked()
+{
+	gantry->setOrigin();
+    ui.Gantry_x_spinBox->setEnabled(true);
+    ui.Gantry_y_spinBox->setEnabled(true);
+    ui.Gantry_z_spinBox->setEnabled(true);
+}
+void FUSMainWindow::handleGantry_return_ButtonClicked()
+{
+	gantry->returnToOrigin();
+}
+void FUSMainWindow::handleGantry_movetoposition_ButtonClicked()
+{
+    gantry->gantriGoToPosition.x = ui.Gantry_x_spinBox->value();
+	gantry->gantriGoToPosition.y = ui.Gantry_y_spinBox->value();
+	gantry->gantriGoToPosition.z = ui.Gantry_z_spinBox->value();
+	gantry->MoveTo();
 }
