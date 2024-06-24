@@ -62,9 +62,10 @@ void loop() {
     else {
       stopRequested = false; // Reset the stop flag
       processMovementCommand(receivedData);
-  }
-  if (stopRequested) {
-    stopMotors();
+    }
+    if (stopRequested) {
+      stopMotors();
+    }
   }
 }
 
