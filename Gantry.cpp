@@ -12,10 +12,14 @@ Gantry::Gantry(FUSMainWindow* parent) :
     fus_mainwindow(parent),
     arduino(new ArduinoDevice("COM3", fus_mainwindow)),
     gantryPosition({ 0, 0, 0 }),
-    gantriGoToPosition({ 0, 0, 0 })
+    gantriGoToPosition({ 0, 0, 0 }),
+	ackRecieved(false)
 {
     // Connect the ArduinoDevice's serialDataReceived signal to the FUSMainWindow's emitPrintSignal slot
     connect(arduino, &ArduinoDevice::serialDataReceived, fus_mainwindow, &FUSMainWindow::emitPrintSignal);
+
+	waitTimer = new QTimer(this);
+	connect(waitTimer, &QTimer::timeout, this, &Gantry::onWaitTimerTimeout);
 }
 
 Gantry::~Gantry()
@@ -44,6 +48,7 @@ void Gantry::move_Click(char Direction, float Distance, float Speed)
 
 void Gantry::stop_Click()
 {
+	waitTimer->stop(); // Stop the waiting process
 	arduino->readSerialData();
     Move('S', '0', '0');
 }
@@ -113,5 +118,16 @@ void Gantry::MoveTo()
 	else
 	{
 		Move('B', gantryPosition.y - gantriGoToPosition.y, 5);
+	}
+}
+
+void Gantry::onWaitTimerTimeout()
+{
+	if (ackRecieved) {
+		waitTimer->stop();
+		// Proceed with updating the position and UI...
+	}
+	else {
+		// Optionally, emit a signal or log that we're still waiting for acknowledgment
 	}
 }

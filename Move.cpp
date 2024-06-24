@@ -17,29 +17,31 @@ void Gantry::Move(char Direction, float Distance, float Speed)
 		case 'R':
 			gantryPosition.x += Distance;
 			fus_mainwindow->emitPrintSignal("Going right");
-			//break;
+			break;
 		case 'L':
 			gantryPosition.x -= Distance;
 			fus_mainwindow->emitPrintSignal("Going left");
-			//break;
+			break;
 		case 'U':
 			gantryPosition.z += Distance;
 			fus_mainwindow->emitPrintSignal("Going up");
-			//break;
+			break;
 		case 'D':
 			gantryPosition.z -= Distance;
 			fus_mainwindow->emitPrintSignal("Going down");
-			//break;
+			break;
 		case 'F':
 			gantryPosition.y += Distance;
 			fus_mainwindow->emitPrintSignal("Going forward");
-			//break;
+			break;
 		case 'B':
 			gantryPosition.y -= Distance;
 			fus_mainwindow->emitPrintSignal("Going backward");
-			//break;
+			break;
 	}
 	arduino->write(Direction, Distance, Speed);
+	ackRecieved = false;
+	waitTimer->start(100);
 	fus_mainwindow->ui.Gantry_x_spinBox->setValue(gantryPosition.x);
 	fus_mainwindow->ui.Gantry_y_spinBox->setValue(gantryPosition.y);
 	fus_mainwindow->ui.Gantry_z_spinBox->setValue(gantryPosition.z);

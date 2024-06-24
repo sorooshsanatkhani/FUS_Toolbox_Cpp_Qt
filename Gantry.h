@@ -42,8 +42,16 @@ public:
 	void returnToOrigin();
 	void MoveTo();
 
+public slots:
+	void onWaitTimerTimeout();
+
 private:
 	FUSMainWindow* fus_mainwindow;  // Pointer to the main window
 	ArduinoDevice* arduino;
+
+	QTimer* waitTimer;
+	bool ackRecieved;
+
+	void checkForAck();
 };
 #endif // GANTRY_H
