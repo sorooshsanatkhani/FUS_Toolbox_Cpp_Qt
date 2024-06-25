@@ -19,7 +19,15 @@ const int microsteps = 125; // 125 microsteps per 10mm
 
 volatile bool stopRequested = false; // Flag to signal stop
 
-void setup() {
+// Command queue setup
+const int maxCommands = 100; // Maximum number of commands to store
+String commandQueue[maxCommands]; // Array to store commands
+int queueHead = 0; // Points to the head of the queue
+int queueTail = 0; // Points to the tail of the queue
+int commandCount = 0; // Number of commands in the queue
+
+void setup()
+{
   Serial.begin(9600);
   // Set pin modes
   pinMode(PUL_LR_Pin, OUTPUT);
@@ -42,34 +50,71 @@ void setup() {
   digitalWrite(ENA_FB_Pin, HIGH);
 }
 
-void loop() {
-  if (Serial.available() > 0) {
-    String receivedData = Serial.readStringUntil('\n');
-    Serial.println("ACK");
-    if (receivedData.charAt(0) == 'O') { // Check if the received data is the ON command
-      digitalWrite(ENA_LR_Pin, LOW);
-      digitalWrite(ENA_UD_Pin, LOW);
-      digitalWrite(ENA_FB_Pin, LOW);
-    }
-    else if (receivedData.charAt(0) == 'C') { // Check if the received data is the OFF command
-      digitalWrite(ENA_LR_Pin, HIGH);
-      digitalWrite(ENA_UD_Pin, HIGH);
-      digitalWrite(ENA_FB_Pin, HIGH);
-    }
-    else if (receivedData.charAt(0) == 'S') { // Check if the received data is the stop command
-      stopRequested = true; // Set the stop flag
-    }
-    else {
-      stopRequested = false; // Reset the stop flag
-      processMovementCommand(receivedData);
-    }
-    if (stopRequested) {
-      stopMotors();
-    }
+void loop()
+{
+  // Check for new commands and enqueue them
+  while (Serial.available() > 0) {
+    enqueueCommand(Serial.readStringUntil('\n'));
+  }
+
+  // Process the next command in the queue if available
+  if (commandCount > 0) {
+    String command = dequeueCommand();
+    processCommand(command);
   }
 }
 
-void processMovementCommand(String command) {
+void enqueueCommand(String command)
+{
+  if (commandCount < maxCommands) {
+    commandQueue[queueTail] = command;
+    queueTail = (queueTail + 1) % maxCommands;
+    commandCount++;
+  } else {
+    // Queue is full, handle overflow here
+    Serial.println("Command queue is full. Command ignored.");
+  }
+}
+
+String dequeueCommand()
+{
+  if (commandCount > 0) {
+    String command = commandQueue[queueHead];
+    queueHead = (queueHead + 1) % maxCommands;
+    commandCount--;
+    return command;
+  }
+  return ""; // Return an empty string if the queue is empty
+}
+
+void processCommand(String command)
+{
+  Serial.println("Processing command: " + command);
+  Serial.println("ACK");
+  if (command.charAt(0) == 'O') { // Check if the received data is the ON command
+    digitalWrite(ENA_LR_Pin, LOW);
+    digitalWrite(ENA_UD_Pin, LOW);
+    digitalWrite(ENA_FB_Pin, LOW);
+  }
+  else if (command.charAt(0) == 'C') { // Check if the received data is the OFF command
+    digitalWrite(ENA_LR_Pin, HIGH);
+    digitalWrite(ENA_UD_Pin, HIGH);
+    digitalWrite(ENA_FB_Pin, HIGH);
+  }
+  else if (command.charAt(0) == 'S') { // Check if the received data is the stop command
+    stopRequested = true; // Set the stop flag
+  }
+  else {
+    stopRequested = false; // Reset the stop flag
+    processMovementCommand(command);
+  }
+  if (stopRequested) {
+    stopMotors();
+  }
+}
+
+void processMovementCommand( String command)
+{
   char direction = command.charAt(0);
   int firstCommaIndex = command.indexOf(',');
   int secondCommaIndex = command.indexOf(',', firstCommaIndex + 1);
@@ -115,9 +160,15 @@ void controlStepper(byte dirPin, byte pulPin, byte enaPin, bool direction, long 
       String receivedData = Serial.readStringUntil('\n');
       if (receivedData.charAt(0) == 'S') { // If stop command is received
         digitalWrite(pulPin, LOW); // Disable motor immediately
+        stopRequested = true; // Set the stop flag
+        stopMotors(); // Call stopMotors function to handle stopping
         return; // Exit the function
+      } else {
+        // If it's not a stop command, enqueue the command for later processing
+        enqueueCommand(receivedData);
       }
     }
+  
     digitalWrite(pulPin, HIGH);
     delayMicroseconds(HalfPeriod);
     digitalWrite(pulPin, LOW);
