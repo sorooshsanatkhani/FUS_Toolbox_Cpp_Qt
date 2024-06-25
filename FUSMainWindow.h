@@ -44,9 +44,6 @@ public:
     unsigned int getPRFValue();
     unsigned int getLengthValue();
 
-public slots:
-    //void handlePortOpened(bool opened);
-
 signals:
     void printSignal(const QString& text);  // Signal to print text
 
@@ -89,6 +86,7 @@ private:
     PicoScope* picoScope;  // Pointer to a PicoScope object
     WaveformGenerator* waveformgenerator;
     Gantry* gantry;
+    ArduinoDevice* arduinoDevice;
     QProgressBar* progressBar;
     QElapsedTimer elapsedTimer;
     QTimer* progressTimer;

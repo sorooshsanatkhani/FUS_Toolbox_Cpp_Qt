@@ -22,7 +22,6 @@ public:
 
 signals:
     void serialDataReceived(const QString& data);
-    //void portOpened(bool success);
     void acknowledgmentReceived();  // Signal for when an acknowledgment message is received from the Arduino
 
 public slots:

@@ -19,7 +19,8 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
     waveformgenerator(new WaveformGenerator(this)),
     gantry(new Gantry(this)),
     completionTimer(new QTimer(this)),
-    progressTimer(new QTimer(this))
+    progressTimer(new QTimer(this)),
+    arduinoDevice(new ArduinoDevice("COM3", this)) // Initializing the ArduinoDevice object with the COM port
 {
     ui.setupUi(this);
     this->setWindowIcon(QIcon(":/FUSMainWindow/Resources/logo.ico"));
@@ -59,6 +60,8 @@ FUSMainWindow::~FUSMainWindow()
     }
 
     delete completionTimer;
+    delete gantry;
+    delete arduinoDevice;
 }
 
 void FUSMainWindow::connectSignalsAndSlots()
@@ -359,20 +362,6 @@ void FUSMainWindow::handleGantryToggleButtonClicked()
         gantry->on();
     }
 }
-
-/*
-void FUSMainWindow::handlePortOpened(bool opened)
-{
-    if (opened) {
-        ui.Gantry_onoff_Button->setStyleSheet("background-color: #00FF00");
-        // Enable other UI components as needed
-    }
-    else {
-        ui.Gantry_onoff_Button->setStyleSheet("background-color: red");
-        // Disable other UI components as needed
-    }
-}
-*/
 
 void FUSMainWindow::populateDIRComboBox() {
     QStringList options = { "Right", "Left", "Up", "Down", "Forward", "Backward"};

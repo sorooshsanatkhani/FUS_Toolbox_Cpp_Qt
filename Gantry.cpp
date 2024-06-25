@@ -28,6 +28,8 @@ Gantry::~Gantry()
 
 void Gantry::on()
 {
+	std::queue<std::tuple<char, float, float>> empty;
+	std::swap(commandQueue, empty); // Clear the command queue
 	commandQueue.push(std::make_tuple('O', 0, 0));
 	processCommandQueue();
 	arduino->readSerialData();
@@ -43,13 +45,15 @@ void Gantry::on()
 	fus_mainwindow->ui.Gantry_down_Button->setEnabled(true);
 	fus_mainwindow->ui.Gantry_forward_Button->setEnabled(true);
 	fus_mainwindow->ui.Gantry_backward_Button->setEnabled(true);
-	//arduino->write('O', 0, 0);	// sending 'O' as open signal to turn on the motors
 }
 
 void Gantry::off()
 {
+	std::queue<std::tuple<char, float, float>> empty;
+	std::swap(commandQueue, empty); // Clear the command queue
 	commandQueue.push(std::make_tuple('C', 0, 0));
 	processCommandQueue();
+	arduino->readSerialData();
 	fus_mainwindow->ui.Gantry_onoff_Button->setStyleSheet("background-color: red");
 	fus_mainwindow->ui.Gantry_DIR_comboBox->setEnabled(false);
 	fus_mainwindow->ui.Gantry_distance_spinBox->setEnabled(false);
@@ -68,7 +72,6 @@ void Gantry::off()
 	fus_mainwindow->ui.Gantry_x_spinBox->setEnabled(false);
 	fus_mainwindow->ui.Gantry_y_spinBox->setEnabled(false);
 	fus_mainwindow->ui.Gantry_z_spinBox->setEnabled(false);
-	//arduino->write('C', 0, 0);	// sending 'C' as close signal to turn off the motors
 }
 
 void Gantry::move_Click(char Direction, float Distance, float Speed)
