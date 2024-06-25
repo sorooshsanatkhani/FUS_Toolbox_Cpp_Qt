@@ -31,6 +31,7 @@ void Gantry::open()
     arduino->open();
 	commandQueue.push(std::make_tuple('O', 0, 0));
 	processCommandQueue();
+	arduino->readSerialData();
 	//arduino->write('O', 0, 0);	// sending 'O' as open signal to turn on the motors
 }
 

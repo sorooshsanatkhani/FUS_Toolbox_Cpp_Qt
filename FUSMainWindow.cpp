@@ -330,10 +330,10 @@ void FUSMainWindow::setupGantryToggleButton()
     QStateMachine* machine = new QStateMachine(this);
 
     QState* offState = new QState(machine);
-    offState->assignProperty(ui.Gantry_onoff_Button, "text", "OFF");
+    offState->assignProperty(ui.Gantry_onoff_Button, "styleSheet", "background-color: red");
 
     QState* onState = new QState(machine);
-    onState->assignProperty(ui.Gantry_onoff_Button, "text", "ON");
+    onState->assignProperty(ui.Gantry_onoff_Button, "styleSheet", "background-color: green");
 
     // Transitions
     //offState->addTransition(ui.Gantry_onoff_Button, &QPushButton::clicked, onState);
@@ -350,7 +350,7 @@ void FUSMainWindow::handleGantryToggleButtonClicked()
 {
 
     // Check the current text of the toggle button to determine its state
-    if (ui.Gantry_onoff_Button->text() == "ON") {
+    if (ui.Gantry_onoff_Button->styleSheet().contains("green")) {
         // If the button is in the ON state, call the close method
         gantry->close();
     }
@@ -363,11 +363,11 @@ void FUSMainWindow::handleGantryToggleButtonClicked()
 void FUSMainWindow::handlePortOpened(bool opened)
 {
     if (opened) {
-        ui.Gantry_onoff_Button->setText("ON");
+        ui.Gantry_onoff_Button->setStyleSheet("background-color: green");
         // Enable other UI components as needed
     }
     else {
-        ui.Gantry_onoff_Button->setText("OFF");
+        ui.Gantry_onoff_Button->setStyleSheet("background-color: red");
         // Disable other UI components as needed
     }
 }

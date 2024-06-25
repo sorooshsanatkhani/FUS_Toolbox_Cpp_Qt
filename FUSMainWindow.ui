@@ -613,7 +613,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1234</x>
+      <x>1224</x>
       <y>20</y>
       <width>25</width>
       <height>20</height>
@@ -633,7 +633,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1195</x>
+      <x>1185</x>
       <y>20</y>
       <width>25</width>
       <height>20</height>
@@ -653,7 +653,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1220</x>
+      <x>1210</x>
       <y>0</y>
       <width>15</width>
       <height>25</height>
@@ -673,7 +673,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1220</x>
+      <x>1210</x>
       <y>30</y>
       <width>15</width>
       <height>25</height>
@@ -693,7 +693,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1250</x>
       <y>0</y>
       <width>20</width>
       <height>30</height>
@@ -713,7 +713,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1250</x>
       <y>30</y>
       <width>20</width>
       <height>30</height>
@@ -845,7 +845,7 @@
    <widget class="QLabel" name="label_14">
     <property name="geometry">
      <rect>
-      <x>1255</x>
+      <x>1175</x>
       <y>70</y>
       <width>15</width>
       <height>24</height>
@@ -897,7 +897,7 @@
    <widget class="QLabel" name="label_15">
     <property name="geometry">
      <rect>
-      <x>1255</x>
+      <x>1175</x>
       <y>95</y>
       <width>15</width>
       <height>24</height>
@@ -946,7 +946,7 @@
    <widget class="QLabel" name="label_16">
     <property name="geometry">
      <rect>
-      <x>1255</x>
+      <x>1175</x>
       <y>120</y>
       <width>15</width>
       <height>24</height>
@@ -971,10 +971,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1280</x>
-      <y>22</y>
-      <width>30</width>
-      <height>22</height>
+      <x>1270</x>
+      <y>40</y>
+      <width>40</width>
+      <height>26</height>
      </rect>
     </property>
     <property name="text">
@@ -984,8 +984,8 @@
    <widget class="QLabel" name="label_17">
     <property name="geometry">
      <rect>
-      <x>1210</x>
-      <y>90</y>
+      <x>1280</x>
+      <y>100</y>
       <width>40</width>
       <height>40</height>
      </rect>
@@ -1012,10 +1012,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1290</x>
-      <y>48</y>
-      <width>60</width>
-      <height>22</height>
+      <x>1280</x>
+      <y>70</y>
+      <width>70</width>
+      <height>26</height>
      </rect>
     </property>
     <property name="text">
@@ -1025,14 +1025,28 @@
    <widget class="QPushButton" name="Gantry_onoff_Button">
     <property name="geometry">
      <rect>
-      <x>1164</x>
+      <x>1293</x>
       <y>0</y>
-      <width>30</width>
-      <height>20</height>
+      <width>35</width>
+      <height>35</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <bold>false</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>OFF</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::SystemShutdown"/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_return_Button">
@@ -1041,10 +1055,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1315</x>
-      <y>22</y>
-      <width>45</width>
-      <height>22</height>
+      <x>1310</x>
+      <y>40</y>
+      <width>50</width>
+      <height>26</height>
      </rect>
     </property>
     <property name="text">
@@ -1057,7 +1071,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1270</x>
+      <x>1190</x>
       <y>70</y>
       <width>60</width>
       <height>24</height>
@@ -1085,7 +1099,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1270</x>
+      <x>1190</x>
       <y>95</y>
       <width>60</width>
       <height>24</height>
@@ -1113,7 +1127,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1270</x>
+      <x>1190</x>
       <y>120</y>
       <width>60</width>
       <height>24</height>
