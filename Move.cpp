@@ -16,27 +16,27 @@ void Gantry::Move(char Direction, float Distance, float Speed)
 	{
 		case 'R':
 			gantryPosition.x += Distance;
-			fus_mainwindow->emitPrintSignal("Going right");
+			//fus_mainwindow->emitPrintSignal("Going right");
 			break;
 		case 'L':
 			gantryPosition.x -= Distance;
-			fus_mainwindow->emitPrintSignal("Going left");
+			//fus_mainwindow->emitPrintSignal("Going left");
 			break;
 		case 'U':
 			gantryPosition.z += Distance;
-			fus_mainwindow->emitPrintSignal("Going up");
+			//fus_mainwindow->emitPrintSignal("Going up");
 			break;
 		case 'D':
 			gantryPosition.z -= Distance;
-			fus_mainwindow->emitPrintSignal("Going down");
+			//fus_mainwindow->emitPrintSignal("Going down");
 			break;
 		case 'F':
 			gantryPosition.y += Distance;
-			fus_mainwindow->emitPrintSignal("Going forward");
+			//fus_mainwindow->emitPrintSignal("Going forward");
 			break;
 		case 'B':
 			gantryPosition.y -= Distance;
-			fus_mainwindow->emitPrintSignal("Going backward");
+			//fus_mainwindow->emitPrintSignal("Going backward");
 			break;
 	}
 	// Add the command to the queue instead of sending it directly
@@ -48,5 +48,5 @@ void Gantry::Move(char Direction, float Distance, float Speed)
 	fus_mainwindow->ui.Gantry_x_spinBox->setValue(gantryPosition.x);
 	fus_mainwindow->ui.Gantry_y_spinBox->setValue(gantryPosition.y);
 	fus_mainwindow->ui.Gantry_z_spinBox->setValue(gantryPosition.z);
-	fus_mainwindow->emitPrintSignal("Position updated");
+	//fus_mainwindow->emitPrintSignal("Position updated");
 }

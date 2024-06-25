@@ -29,12 +29,16 @@ Gantry::~Gantry()
 void Gantry::open()
 {
     arduino->open();
-	arduino->write('O', 0, 0);	// sending 'O' as open signal to turn on the motors
+	commandQueue.push(std::make_tuple('O', 0, 0));
+	processCommandQueue();
+	//arduino->write('O', 0, 0);	// sending 'O' as open signal to turn on the motors
 }
 
 void Gantry::close()
 {
-	arduino->write('C', 0, 0);	// sending 'C' as close signal to turn off the motors
+	commandQueue.push(std::make_tuple('C', 0, 0));
+	processCommandQueue();
+	//arduino->write('C', 0, 0);	// sending 'C' as close signal to turn off the motors
 	arduino->close();
 }
 

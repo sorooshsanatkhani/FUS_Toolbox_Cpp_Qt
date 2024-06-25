@@ -30,7 +30,7 @@ ArduinoDevice::~ArduinoDevice() {
 
 bool ArduinoDevice::open() {
     if (m_serialPort->open(QIODevice::ReadWrite)) {
-        qDebug() << "Opened port" << m_serialPort->portName();
+        //qDebug() << "Opened port" << m_serialPort->portName();
         fus_mainwindow->emitPrintSignal("Arduino port opened!");
         emit portOpened(true); // Emit signal indicating success
         fus_mainwindow->ui.Gantry_DIR_comboBox->setEnabled(true);
@@ -53,7 +53,7 @@ bool ArduinoDevice::open() {
         return true;
     }
     else {
-        qDebug() << "Failed to open port" << m_serialPort->portName();
+        //qDebug() << "Failed to open port" << m_serialPort->portName();
         fus_mainwindow->emitPrintSignal("Failed to open Arduino port!");
         emit portOpened(false); // Emit signal indicating failure
         return false;
@@ -63,7 +63,7 @@ bool ArduinoDevice::open() {
 void ArduinoDevice::close() {
     if (m_serialPort->isOpen()) {
         m_serialPort->close();
-        qDebug() << "Closed port" << m_serialPort->portName();
+        //qDebug() << "Closed port" << m_serialPort->portName();
         fus_mainwindow->emitPrintSignal("Arduino port closed!");
         fus_mainwindow->ui.Gantry_onoff_Button->setText("OFF");
         fus_mainwindow->ui.Gantry_DIR_comboBox->setEnabled(false);
@@ -105,9 +105,12 @@ void ArduinoDevice::readSerialData() {
     if (m_serialPort->canReadLine()) {
         QByteArray line = m_serialPort->readLine();
         QString data = QString::fromUtf8(line.trimmed()); // Convert to QString and remove any trailing newline
-        qDebug() << "Received:" << data;
-        fus_mainwindow->emitPrintSignal(data);
-        if (data == "ACK") {
+        //qDebug() << "Received:" << data;
+        if (data != "ACK") {
+            fus_mainwindow->emitPrintSignal(data);
+        }
+        else {
+            fus_mainwindow->emitPrintSignal("Arduino received command!");
             emit acknowledgmentReceived(); // Emit signal indicating an ACK was received
         }
     }

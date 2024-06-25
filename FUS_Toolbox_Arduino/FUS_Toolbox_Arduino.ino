@@ -90,7 +90,6 @@ String dequeueCommand()
 void processCommand(String command)
 {
   Serial.println("Processing command: " + command);
-  Serial.println("ACK");
   if (command.charAt(0) == 'O') { // Check if the received data is the ON command
     digitalWrite(ENA_LR_Pin, LOW);
     digitalWrite(ENA_UD_Pin, LOW);
