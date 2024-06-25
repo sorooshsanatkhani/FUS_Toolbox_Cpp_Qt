@@ -67,6 +67,7 @@ private slots:
     void handleAbortButton();
     
     // Gantry System Functions
+    void initializeArduinoDevice();
     void handleGantry_right_ButtonClicked();
     void handleGantry_left_ButtonClicked();
     void handleGantry_up_ButtonClicked();

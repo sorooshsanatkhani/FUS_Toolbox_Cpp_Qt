@@ -20,7 +20,7 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
     gantry(new Gantry(this)),
     completionTimer(new QTimer(this)),
     progressTimer(new QTimer(this)),
-    arduinoDevice(new ArduinoDevice("COM3", this)) // Initializing the ArduinoDevice object with the COM port
+    arduinoDevice(nullptr) // Initializing the ArduinoDevice object with the COM port
 {
     ui.setupUi(this);
     this->setWindowIcon(QIcon(":/FUSMainWindow/Resources/logo.ico"));
@@ -44,6 +44,9 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
 
     // ON/OFF toggle Button Setup for the Gantry system using existing Gantry_ONOFF_Button
     setupGantryToggleButton();
+
+    // Delayed initialization of ArduinoDevice
+    QTimer::singleShot(100, this, &FUSMainWindow::initializeArduinoDevice);
 }
 
 // Defines the destructor of the FUSMainWindow class
@@ -62,6 +65,10 @@ FUSMainWindow::~FUSMainWindow()
     delete completionTimer;
     delete gantry;
     delete arduinoDevice;
+}
+
+void FUSMainWindow::initializeArduinoDevice() {
+    arduinoDevice = new ArduinoDevice("COM3", this);
 }
 
 void FUSMainWindow::connectSignalsAndSlots()

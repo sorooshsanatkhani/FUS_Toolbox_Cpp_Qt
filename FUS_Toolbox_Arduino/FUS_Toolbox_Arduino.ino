@@ -129,15 +129,7 @@ void processMovementCommand( String command)
   Serial.print(direction);
   Serial.print(",  Distance: ");
   Serial.print(distance);
-  Serial.print("mm,  Speed: ");
-  Serial.print(speed);
-  Serial.print("mm/s,  Steps: ");
-  Serial.print(steps);
-  Serial.print("  ,  Frequency: ");
-  Serial.print(Frequency/1000.0);
-  Serial.print("kHz  ,  Half Period: ");
-  Serial.print(HalfPeriod);
-  Serial.println(" microseconds");
+  Serial.println(" mm");
   // Control Left-Right movement
   if (direction == 'L' || direction == 'R') {
     controlStepper(DIR_LR_Pin, PUL_LR_Pin, ENA_LR_Pin, direction == 'L', steps, HalfPeriod);
@@ -168,7 +160,6 @@ void controlStepper(byte dirPin, byte pulPin, byte enaPin, bool direction, long 
         enqueueCommand(receivedData);
       }
     }
-  
     digitalWrite(pulPin, HIGH);
     delayMicroseconds(HalfPeriod);
     digitalWrite(pulPin, LOW);
