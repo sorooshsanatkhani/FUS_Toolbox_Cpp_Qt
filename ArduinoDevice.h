@@ -18,8 +18,6 @@ public:
     ArduinoDevice(const QString& portName, FUSMainWindow* mainWindow);
     ~ArduinoDevice();
 
-    bool open();
-    void close();
     qint64 write(char direction, float distance, float speed);
 
 signals:

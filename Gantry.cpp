@@ -26,21 +26,49 @@ Gantry::~Gantry()
     delete arduino;
 }
 
-void Gantry::open()
+void Gantry::off()
 {
-    arduino->open();
 	commandQueue.push(std::make_tuple('O', 0, 0));
 	processCommandQueue();
 	arduino->readSerialData();
+	fus_mainwindow->ui.Gantry_DIR_comboBox->setEnabled(true);
+	fus_mainwindow->ui.Gantry_distance_spinBox->setEnabled(true);
+	fus_mainwindow->ui.Gantry_speed_spinBox->setEnabled(true);
+	fus_mainwindow->ui.Gantry_move_Button->setEnabled(true);
+	fus_mainwindow->ui.Gantry_stop_Button->setEnabled(true);
+	fus_mainwindow->ui.Gantry_set_Button->setEnabled(true);
+	fus_mainwindow->ui.Gantry_right_Button->setEnabled(true);
+	fus_mainwindow->ui.Gantry_left_Button->setEnabled(true);
+	fus_mainwindow->ui.Gantry_up_Button->setEnabled(true);
+	fus_mainwindow->ui.Gantry_down_Button->setEnabled(true);
+	fus_mainwindow->ui.Gantry_forward_Button->setEnabled(true);
+	fus_mainwindow->ui.Gantry_backward_Button->setEnabled(true);
 	//arduino->write('O', 0, 0);	// sending 'O' as open signal to turn on the motors
 }
 
-void Gantry::close()
+void Gantry::on()
 {
 	commandQueue.push(std::make_tuple('C', 0, 0));
 	processCommandQueue();
+	fus_mainwindow->ui.Gantry_onoff_Button->setStyleSheet("background-color: red");
+	fus_mainwindow->ui.Gantry_DIR_comboBox->setEnabled(false);
+	fus_mainwindow->ui.Gantry_distance_spinBox->setEnabled(false);
+	fus_mainwindow->ui.Gantry_speed_spinBox->setEnabled(false);
+	fus_mainwindow->ui.Gantry_move_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_stop_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_set_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_return_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_movetoposition_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_right_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_left_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_up_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_down_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_forward_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_backward_Button->setEnabled(false);
+	fus_mainwindow->ui.Gantry_x_spinBox->setEnabled(false);
+	fus_mainwindow->ui.Gantry_y_spinBox->setEnabled(false);
+	fus_mainwindow->ui.Gantry_z_spinBox->setEnabled(false);
 	//arduino->write('C', 0, 0);	// sending 'C' as close signal to turn off the motors
-	arduino->close();
 }
 
 void Gantry::move_Click(char Direction, float Distance, float Speed)

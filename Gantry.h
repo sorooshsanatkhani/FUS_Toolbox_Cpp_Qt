@@ -35,8 +35,8 @@ public:
 
 	void Move(char,float,float);
 
-	void open();
-	void close();
+	void on();
+	void off();
 
 	void move_Click(char,float,float);
 	void stop_Click();
