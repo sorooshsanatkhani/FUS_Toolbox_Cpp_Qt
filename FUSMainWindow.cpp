@@ -410,12 +410,15 @@ void FUSMainWindow::handleGantry_stop_ButtonClicked()
 void FUSMainWindow::handleGantry_set_ButtonClicked()
 {
 	gantry->setOrigin();
+    ui.Gantry_return_Button->setEnabled(true);
+    ui.Gantry_movetoposition_Button->setEnabled(true);
     ui.Gantry_x_spinBox->setEnabled(true);
     ui.Gantry_y_spinBox->setEnabled(true);
     ui.Gantry_z_spinBox->setEnabled(true);
 }
 void FUSMainWindow::handleGantry_return_ButtonClicked()
 {
+    ui.Gantry_return_Button->setEnabled(false);
 	gantry->returnToOrigin();
 }
 void FUSMainWindow::handleGantry_movetoposition_ButtonClicked()

@@ -69,6 +69,7 @@ void enqueueCommand(String command)
   if (commandCount < maxCommands) {
     commandQueue[queueTail] = command;
     queueTail = (queueTail + 1) % maxCommands;
+    Serial.println("Command recieved!");
     commandCount++;
   } else {
     // Queue is full, handle overflow here
