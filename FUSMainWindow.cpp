@@ -350,7 +350,7 @@ void FUSMainWindow::handleGantryToggleButtonClicked()
 {
 
     // Check the current text of the toggle button to determine its state
-    if (ui.Gantry_onoff_Button->styleSheet().contains("green")) {
+    if (ui.Gantry_onoff_Button->styleSheet().contains("#00FF00")) {
         // If the button is in the ON state, call the close method
         gantry->close();
     }
