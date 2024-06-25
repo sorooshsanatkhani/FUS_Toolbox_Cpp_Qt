@@ -181,6 +181,8 @@ void stopMotors() {
   digitalWrite(PUL_LR_Pin, LOW);
   digitalWrite(PUL_UD_Pin, LOW);
   digitalWrite(PUL_FB_Pin, LOW);
-
+  queueHead = 0;
+  queueTail = 0;
+  commandCount = 0;
   stopRequested = false;
 }

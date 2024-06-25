@@ -120,11 +120,11 @@ void Gantry::MoveTo()
 
 void Gantry::processCommandQueue() {
 	if (commandQueue.empty()) {
-		fus_mainwindow->emitPrintSignal("Command queue is empty.");
+		//fus_mainwindow->emitPrintSignal("Command queue is empty.");
 		return;
 	}
 	auto [Direction, Distance, Speed] = commandQueue.front();
-	fus_mainwindow->emitPrintSignal("Processing command queue...");
+	//fus_mainwindow->emitPrintSignal("Processing command queue...");
 
 	commandQueue.pop();
 	arduino->write(Direction, Distance, Speed);
@@ -134,12 +134,12 @@ void Gantry::processCommandQueue() {
 void Gantry::onAcknowledgmentReceived()
 {
 	waitTimer->stop(); // Stop the timer as acknowledgment is received
-	fus_mainwindow->emitPrintSignal("Acknowledgment is received");
+	//fus_mainwindow->emitPrintSignal("Acknowledgment is received");
 	processCommandQueue(); // Attempt to process the next command in the queue
 }
 
 void Gantry::onWaitTimerTimeout()
 {
-	fus_mainwindow->emitPrintSignal("Timeout waiting for acknowledgment from Arduino.");
+	//fus_mainwindow->emitPrintSignal("Timeout waiting for acknowledgment from Arduino.");
 	processCommandQueue(); // Attempt to process the next command in the queue
 }
