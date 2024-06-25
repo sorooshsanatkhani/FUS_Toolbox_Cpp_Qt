@@ -18,15 +18,15 @@ ArduinoDevice::ArduinoDevice(const QString& portName, FUSMainWindow* mainWindow)
     m_serialPort->setFlowControl(QSerialPort::NoFlowControl);
 
     connect(m_serialPort, &QSerialPort::readyRead, this, &ArduinoDevice::readSerialData);
-    connect(this, &ArduinoDevice::portOpened, fus_mainwindow, &FUSMainWindow::handlePortOpened);
+    //connect(this, &ArduinoDevice::portOpened, fus_mainwindow, &FUSMainWindow::handlePortOpened);
 
     if (m_serialPort->open(QIODevice::ReadWrite)) {
         fus_mainwindow->emitPrintSignal("Arduino port opened!");
-        emit portOpened(true); // Emit signal indicating success
+        //emit portOpened(true); // Emit signal indicating success
     }
     else {
         fus_mainwindow->emitPrintSignal("Failed to open Arduino port!");
-        emit portOpened(false); // Emit signal indicating failure
+        //emit portOpened(false); // Emit signal indicating failure
     }
 }
 

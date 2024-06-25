@@ -45,7 +45,7 @@ public:
     unsigned int getLengthValue();
 
 public slots:
-    void handlePortOpened(bool opened);
+    //void handlePortOpened(bool opened);
 
 signals:
     void printSignal(const QString& text);  // Signal to print text

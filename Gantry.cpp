@@ -26,7 +26,7 @@ Gantry::~Gantry()
     delete arduino;
 }
 
-void Gantry::off()
+void Gantry::on()
 {
 	commandQueue.push(std::make_tuple('O', 0, 0));
 	processCommandQueue();
@@ -46,7 +46,7 @@ void Gantry::off()
 	//arduino->write('O', 0, 0);	// sending 'O' as open signal to turn on the motors
 }
 
-void Gantry::on()
+void Gantry::off()
 {
 	commandQueue.push(std::make_tuple('C', 0, 0));
 	processCommandQueue();

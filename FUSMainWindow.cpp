@@ -360,6 +360,7 @@ void FUSMainWindow::handleGantryToggleButtonClicked()
     }
 }
 
+/*
 void FUSMainWindow::handlePortOpened(bool opened)
 {
     if (opened) {
@@ -371,6 +372,8 @@ void FUSMainWindow::handlePortOpened(bool opened)
         // Disable other UI components as needed
     }
 }
+*/
+
 void FUSMainWindow::populateDIRComboBox() {
     QStringList options = { "Right", "Left", "Up", "Down", "Forward", "Backward"};
     ui.Gantry_DIR_comboBox->addItems(options);
