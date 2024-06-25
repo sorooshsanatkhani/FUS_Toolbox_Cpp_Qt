@@ -19,8 +19,7 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
     waveformgenerator(new WaveformGenerator(this)),
     gantry(new Gantry(this)),
     completionTimer(new QTimer(this)),
-    progressTimer(new QTimer(this)),
-    arduinoDevice(nullptr) // Initializing the ArduinoDevice object with the COM port
+    progressTimer(new QTimer(this))
 {
     ui.setupUi(this);
     this->setWindowIcon(QIcon(":/FUSMainWindow/Resources/logo.ico"));
@@ -44,9 +43,6 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
 
     // ON/OFF toggle Button Setup for the Gantry system using existing Gantry_ONOFF_Button
     setupGantryToggleButton();
-
-    // Delayed initialization of ArduinoDevice
-    QTimer::singleShot(100, this, &FUSMainWindow::initializeArduinoDevice);
 }
 
 // Defines the destructor of the FUSMainWindow class
@@ -64,11 +60,6 @@ FUSMainWindow::~FUSMainWindow()
 
     delete completionTimer;
     delete gantry;
-    delete arduinoDevice;
-}
-
-void FUSMainWindow::initializeArduinoDevice() {
-    arduinoDevice = new ArduinoDevice("COM3", this);
 }
 
 void FUSMainWindow::connectSignalsAndSlots()
@@ -100,6 +91,7 @@ void FUSMainWindow::connectSignalsAndSlots()
     connect(ui.Abort_Button, &QPushButton::clicked, this, &FUSMainWindow::handleAbortButton);
 
     // Connects the UI parts related to Gantry system to their respective slots
+    connect(ui.Gantry_open_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_open_ButtonClicked);
     connect(ui.Gantry_right_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_right_ButtonClicked);
     connect(ui.Gantry_left_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_left_ButtonClicked);
     connect(ui.Gantry_up_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_up_ButtonClicked);
@@ -335,6 +327,11 @@ void FUSMainWindow::handleAbortButton()
 ////////////////////////////////////////////////
 /////// Gantry System /////////
 // Setup for the Gantry ON/OFF toggle button
+void FUSMainWindow::handleGantry_open_ButtonClicked()
+{
+    gantry->open_Click();
+}
+
 void FUSMainWindow::setupGantryToggleButton()
 {
     QStateMachine* machine = new QStateMachine(this);

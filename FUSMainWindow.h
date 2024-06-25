@@ -67,7 +67,7 @@ private slots:
     void handleAbortButton();
     
     // Gantry System Functions
-    void initializeArduinoDevice();
+    void handleGantry_open_ButtonClicked();
     void handleGantry_right_ButtonClicked();
     void handleGantry_left_ButtonClicked();
     void handleGantry_up_ButtonClicked();
@@ -76,7 +76,6 @@ private slots:
     void handleGantry_backward_ButtonClicked();
     void handleGantry_move_ButtonClicked();
     void handleGantry_stop_ButtonClicked();
-    // Gantry ON/OFF Toggle Button
     void setupGantryToggleButton(); // Setup method for the Gantry ON/OFF toggle button
     void handleGantryToggleButtonClicked(); // Slot to handle Gantry ON/OFF button clicks
     void handleGantry_set_ButtonClicked();
@@ -87,7 +86,6 @@ private:
     PicoScope* picoScope;  // Pointer to a PicoScope object
     WaveformGenerator* waveformgenerator;
     Gantry* gantry;
-    ArduinoDevice* arduinoDevice;
     QProgressBar* progressBar;
     QElapsedTimer elapsedTimer;
     QTimer* progressTimer;

@@ -845,7 +845,7 @@
    <widget class="QLabel" name="label_14">
     <property name="geometry">
      <rect>
-      <x>1175</x>
+      <x>1165</x>
       <y>70</y>
       <width>15</width>
       <height>24</height>
@@ -897,7 +897,7 @@
    <widget class="QLabel" name="label_15">
     <property name="geometry">
      <rect>
-      <x>1175</x>
+      <x>1165</x>
       <y>95</y>
       <width>15</width>
       <height>24</height>
@@ -946,7 +946,7 @@
    <widget class="QLabel" name="label_16">
     <property name="geometry">
      <rect>
-      <x>1175</x>
+      <x>1165</x>
       <y>120</y>
       <width>15</width>
       <height>24</height>
@@ -1023,9 +1023,12 @@
     </property>
    </widget>
    <widget class="QPushButton" name="Gantry_onoff_Button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>1293</x>
+      <x>1325</x>
       <y>0</y>
       <width>35</width>
       <height>35</height>
@@ -1071,9 +1074,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1190</x>
+      <x>1180</x>
       <y>70</y>
-      <width>60</width>
+      <width>70</width>
       <height>24</height>
      </rect>
     </property>
@@ -1099,9 +1102,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1190</x>
+      <x>1180</x>
       <y>95</y>
-      <width>60</width>
+      <width>70</width>
       <height>24</height>
      </rect>
     </property>
@@ -1127,9 +1130,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1190</x>
+      <x>1180</x>
       <y>120</y>
-      <width>60</width>
+      <width>70</width>
       <height>24</height>
      </rect>
     </property>
@@ -1147,6 +1150,20 @@
     </property>
     <property name="value">
      <double>0.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Gantry_open_Button">
+    <property name="geometry">
+     <rect>
+      <x>1270</x>
+      <y>0</y>
+      <width>50</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Open
+port</string>
     </property>
    </widget>
    <zorder>WaveformGenerator_GroupBox</zorder>
@@ -1194,6 +1211,7 @@
    <zorder>Gantry_x_spinBox</zorder>
    <zorder>Gantry_y_spinBox</zorder>
    <zorder>Gantry_z_spinBox</zorder>
+   <zorder>Gantry_open_Button</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

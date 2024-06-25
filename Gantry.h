@@ -33,6 +33,7 @@ public:
 
 	Position3D gantryPosition, gantriGoToPosition;
 
+	void open_Click();
 	void Move(char,float,float);
 
 	void on();

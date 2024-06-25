@@ -26,6 +26,11 @@ Gantry::~Gantry()
     delete arduino;
 }
 
+void Gantry::open_Click()
+{
+	arduino->open();
+}
+
 void Gantry::on()
 {
 	std::queue<std::tuple<char, float, float>> empty;

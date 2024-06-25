@@ -18,13 +18,6 @@ ArduinoDevice::ArduinoDevice(const QString& portName, FUSMainWindow* mainWindow)
     m_serialPort->setFlowControl(QSerialPort::NoFlowControl);
 
     connect(m_serialPort, &QSerialPort::readyRead, this, &ArduinoDevice::readSerialData);
-
-    if (m_serialPort->open(QIODevice::ReadWrite)) {
-        fus_mainwindow->emitPrintSignal("Arduino port opened!");
-    }
-    else {
-        fus_mainwindow->emitPrintSignal("Failed to open Arduino port!");
-    }
 }
 
 ArduinoDevice::~ArduinoDevice() {
@@ -32,6 +25,20 @@ ArduinoDevice::~ArduinoDevice() {
         m_serialPort->close();
     }
     delete m_serialPort;
+}
+
+bool ArduinoDevice::open() {
+    if (m_serialPort->open(QIODevice::ReadWrite)) {
+        qDebug() << "Opened port" << m_serialPort->portName();
+        fus_mainwindow->emitPrintSignal("Arduino port opened!");
+        fus_mainwindow->ui.Gantry_onoff_Button->setEnabled(true);
+        return true;
+    }
+    else {
+        qDebug() << "Failed to open port" << m_serialPort->portName();
+        fus_mainwindow->emitPrintSignal("Failed to open Arduino port!");
+        return false;
+    }
 }
 
 qint64 ArduinoDevice::write(char direction, float distance, float speed) {
