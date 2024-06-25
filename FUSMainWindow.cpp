@@ -151,7 +151,7 @@ int FUSMainWindow::getTimebaseValue()
     return ui.Timebase_spinBox->value();  // Returns the value of Timebase_spinBox
 }
 
-// Defines the getter for the value of Buffer_spinBox
+// Defines the getter for the value of Buffer_spinBoxOFF
 int FUSMainWindow::getBufferValue()
 {
     return ui.Buffer_spinBox->value();  // Returns the value of Buffer_spinBox
@@ -333,11 +333,11 @@ void FUSMainWindow::setupGantryToggleButton()
     offState->assignProperty(ui.Gantry_onoff_Button, "styleSheet", "background-color: red");
 
     QState* onState = new QState(machine);
-    onState->assignProperty(ui.Gantry_onoff_Button, "styleSheet", "background-color: green");
+    onState->assignProperty(ui.Gantry_onoff_Button, "styleSheet", "background-color: #00FF00");
 
     // Transitions
-    //offState->addTransition(ui.Gantry_onoff_Button, &QPushButton::clicked, onState);
-    //onState->addTransition(ui.Gantry_onoff_Button, &QPushButton::clicked, offState);
+    offState->addTransition(ui.Gantry_onoff_Button, &QPushButton::clicked, onState);
+    onState->addTransition(ui.Gantry_onoff_Button, &QPushButton::clicked, offState);
 
     machine->setInitialState(offState);
     machine->start();
@@ -363,7 +363,7 @@ void FUSMainWindow::handleGantryToggleButtonClicked()
 void FUSMainWindow::handlePortOpened(bool opened)
 {
     if (opened) {
-        ui.Gantry_onoff_Button->setStyleSheet("background-color: green");
+        ui.Gantry_onoff_Button->setStyleSheet("background-color: #00FF00");
         // Enable other UI components as needed
     }
     else {

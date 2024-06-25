@@ -60,7 +60,7 @@ void ArduinoDevice::close() {
         m_serialPort->close();
         //qDebug() << "Closed port" << m_serialPort->portName();
         fus_mainwindow->emitPrintSignal("Arduino port closed!");
-        fus_mainwindow->ui.Gantry_onoff_Button->setText("OFF");
+        fus_mainwindow->ui.Gantry_onoff_Button->setStyleSheet("background-color: red");
         fus_mainwindow->ui.Gantry_DIR_comboBox->setEnabled(false);
         fus_mainwindow->ui.Gantry_distance_spinBox->setEnabled(false);
         fus_mainwindow->ui.Gantry_speed_spinBox->setEnabled(false);
