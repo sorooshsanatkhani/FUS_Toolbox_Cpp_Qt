@@ -47,7 +47,7 @@ public:
     explicit WaveformGenerator(FUSMainWindow* parent = nullptr, PicoScope* picoScope = nullptr);  // Constructor
     ~WaveformGenerator();  // Destructor
 
-    void readParameters();  // Function to read the parameters
+    void readParameters(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);  // Function to read the parameters
     std::pair<std::wstring, int> GetDeviceStatus();
     DeviceOutput Burst_ON(int,int, double, double);
     void Stop(ViSession, ViSession, ViStatus);

@@ -140,6 +140,7 @@
     <QtMoc Include="FUSMainWindow.h" />
     <ClCompile Include="ArduinoDevice.cpp" />
     <ClCompile Include="Burst_ON.cpp" />
+    <ClCompile Include="Calibration.cpp" />
     <ClCompile Include="FUSMainWindow.cpp" />
     <ClCompile Include="Gantry.cpp" />
     <ClCompile Include="Move.cpp" />
@@ -155,6 +156,7 @@
     <QtMoc Include="Resources\qcustomplot.h" />
     <QtMoc Include="Gantry.h" />
     <QtMoc Include="ArduinoDevice.h" />
+    <QtMoc Include="Calibration.h" />
     <ClInclude Include="Resources\ps4000.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="PicoScope.cpp" />

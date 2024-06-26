@@ -34,14 +34,29 @@ void WaveformGenerator::CheckDevice_Click()
 	}
 }
 
-void WaveformGenerator::readParameters()
+void WaveformGenerator::readParameters(
+	unsigned int F,
+	unsigned int Vpp,
+	unsigned int pulseDuration,
+	unsigned int dutyCycle,
+	unsigned int PRF,
+	unsigned int Length)
 {
+	/*
 	WaveformGenerator_Vars.Frequency		= fus_mainwindow->getFrequencyValue();  // Gets the value of 
 	WaveformGenerator_Vars.Amplitude		= fus_mainwindow->getAmplitudeValue();  // Gets the value of 
 	WaveformGenerator_Vars.PulseDuration	= fus_mainwindow->getPulseDurationValue();  // Gets the value of 
 	WaveformGenerator_Vars.DutyCycle		= fus_mainwindow->getDutyCycleValue();  // Gets the value of 
 	WaveformGenerator_Vars.PRF				= fus_mainwindow->getPRFValue();  // Gets the value of 
 	WaveformGenerator_Vars.Length			= fus_mainwindow->getLengthValue();  // Gets the value of 
+	*/
+	WaveformGenerator_Vars.Frequency = F;
+	WaveformGenerator_Vars.Amplitude = Vpp;
+	WaveformGenerator_Vars.PulseDuration = pulseDuration;
+	WaveformGenerator_Vars.DutyCycle = dutyCycle;
+	WaveformGenerator_Vars.PRF = PRF;
+	WaveformGenerator_Vars.Length = Length;
+
 }
 
 void WaveformGenerator::GenerateWaveform_Click()

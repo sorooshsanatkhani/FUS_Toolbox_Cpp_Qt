@@ -179,28 +179,52 @@ uint16_t FUSMainWindow::getTriggerVoltageValue()
 /////// Waveform Generator ///////
 void FUSMainWindow::handleSpinBox_Waveform_ValueChanged()
 {
-    waveformgenerator->readParameters();  // Reads the parameters from the spin boxes
+    waveformgenerator->readParameters(
+        getFrequencyValue(),
+        getAmplitudeValue(),
+        getPulseDurationValue(),
+        getDutyCycleValue(),
+        getPRFValue(),
+        getLengthValue());  // Reads the parameters from the spin boxes
 }
 
 void FUSMainWindow::handleSpinBox_PulseDuration_ValueChanged()
 {
     ui.PulseDuration_spinBox->setValue(round(ui.PulseDuration_spinBox->value() * 10.) / 10.);
     ui.DutyCycle_spinBox->setValue(round(((ui.PulseDuration_spinBox->value() / 1000.) * ui.PRF_spinBox->value()) * 100. * 10) / 10.);
-    waveformgenerator->readParameters();
+    waveformgenerator->readParameters(
+        getFrequencyValue(),
+        getAmplitudeValue(),
+        getPulseDurationValue(),
+        getDutyCycleValue(),
+        getPRFValue(),
+        getLengthValue());
 }
 
 void FUSMainWindow::handleSpinBox_DutyCycle_ValueChanged()
 {
     ui.DutyCycle_spinBox->setValue(round(ui.DutyCycle_spinBox->value() * 10.) / 10.);
     ui.PRF_spinBox->setValue(round((ui.DutyCycle_spinBox->value() / 100.) / (ui.PulseDuration_spinBox->value() / 1000.) * 10.) / 10.);
-    waveformgenerator->readParameters();  // Reads the parameters from the spin boxes
+    waveformgenerator->readParameters(
+        getFrequencyValue(),
+        getAmplitudeValue(),
+        getPulseDurationValue(),
+        getDutyCycleValue(),
+        getPRFValue(),
+        getLengthValue());// Reads the parameters from the spin boxes
 }
 
 void FUSMainWindow::handleSpinBox_PRF_ValueChanged()
 {
     ui.PRF_spinBox->setValue(round(ui.PRF_spinBox->value() * 10.) / 10.);
     ui.PulseDuration_spinBox->setValue(round(((ui.DutyCycle_spinBox->value() / 100.) / ui.PRF_spinBox->value()) * 1000. * 10.) / 10.);
-    waveformgenerator->readParameters();  // Reads the parameters from the spin boxes
+    waveformgenerator->readParameters(
+        getFrequencyValue(),
+        getAmplitudeValue(),
+        getPulseDurationValue(),
+        getDutyCycleValue(),
+        getPRFValue(),
+        getLengthValue());// Reads the parameters from the spin boxes
 }
 
 unsigned int FUSMainWindow::getFrequencyValue()
@@ -240,7 +264,13 @@ void FUSMainWindow::handleCheckDeviceButton()
 
 void FUSMainWindow::handleGenerateWaveformButton()
 {
-    waveformgenerator->readParameters();
+    waveformgenerator->readParameters(
+        getFrequencyValue(),
+        getAmplitudeValue(),
+        getPulseDurationValue(),
+        getDutyCycleValue(),
+        getPRFValue(),
+        getLengthValue());
 
     // Start the elapsed timer
     elapsedTimer.start();
