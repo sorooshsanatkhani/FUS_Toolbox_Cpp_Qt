@@ -20,6 +20,7 @@ public:
         Gantry* gantry = nullptr,
         WaveformGenerator* waveformGenerator = nullptr,
         PicoScope* picoScope = nullptr,
+        ArduinoDevice* Arduino = nullptr,
         FUSMainWindow* fus_mainwindow = nullptr,
         QObject* parent = nullptr);
     ~Calibration();  // Destructor
@@ -30,6 +31,7 @@ private:
     Gantry* gantry;
     WaveformGenerator* waveformGenerator;
     PicoScope* picoScope;
+    ArduinoDevice* Arduino;
     FUSMainWindow* fus_mainwindow;
 
     //void moveToNextPosition(int& x, int& y, int& z);

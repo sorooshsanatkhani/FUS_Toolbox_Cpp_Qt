@@ -94,6 +94,7 @@ private:
     WaveformGenerator* waveformgenerator;
     Gantry* gantry;
     Calibration* calibration;
+    ArduinoDevice* arduino;
     QProgressBar* progressBar;
     QElapsedTimer elapsedTimer;
     QTimer* progressTimer;

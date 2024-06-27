@@ -61,12 +61,15 @@ void ArduinoDevice::readSerialData() {
         QByteArray line = m_serialPort->readLine();
         QString data = QString::fromUtf8(line.trimmed()); // Convert to QString and remove any trailing newline
         //qDebug() << "Received:" << data;
-        if (data != "ACK") {
-            fus_mainwindow->emitPrintSignal(data);
+        if (data == 'G') {
+            emit gantryReady(); // Emit signal indicating the gantry is ready to receive new commands
         }
-        else {
+        else if (data == "ACK") {
             fus_mainwindow->emitPrintSignal("Arduino received command!");
             emit acknowledgmentReceived(); // Emit signal indicating an ACK was received
+        }
+        else {
+            fus_mainwindow->emitPrintSignal(data);
         }
     }
 }

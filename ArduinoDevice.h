@@ -24,6 +24,7 @@ public:
 signals:
     void serialDataReceived(const QString& data);
     void acknowledgmentReceived();  // Signal for when an acknowledgment message is received from the Arduino
+    void gantryReady();  // Signal for when the gantry is ready to receive new commands
 
 public slots:
     void readSerialData();

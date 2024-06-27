@@ -18,7 +18,7 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
     picoScope(new PicoScope(this)),
     waveformgenerator(new WaveformGenerator(this)),
     gantry(new Gantry(this)),
-    calibration(new Calibration(gantry, waveformgenerator, picoScope, this, this)),
+    calibration(new Calibration(gantry, waveformgenerator, picoScope, arduino, this, this)),
     completionTimer(new QTimer(this)),
     progressTimer(new QTimer(this))
 {
@@ -187,7 +187,6 @@ void FUSMainWindow::handleSpinBox_Waveform_ValueChanged()
         getPRFValue(),
         getLengthValue());  // Reads the parameters from the spin boxes
 }
-
 void FUSMainWindow::handleSpinBox_PulseDuration_ValueChanged()
 {
     ui.PulseDuration_spinBox->setValue(round(ui.PulseDuration_spinBox->value() * 10.) / 10.);
@@ -200,7 +199,6 @@ void FUSMainWindow::handleSpinBox_PulseDuration_ValueChanged()
         getPRFValue(),
         getLengthValue());
 }
-
 void FUSMainWindow::handleSpinBox_DutyCycle_ValueChanged()
 {
     ui.DutyCycle_spinBox->setValue(round(ui.DutyCycle_spinBox->value() * 10.) / 10.);
@@ -213,7 +211,6 @@ void FUSMainWindow::handleSpinBox_DutyCycle_ValueChanged()
         getPRFValue(),
         getLengthValue());// Reads the parameters from the spin boxes
 }
-
 void FUSMainWindow::handleSpinBox_PRF_ValueChanged()
 {
     ui.PRF_spinBox->setValue(round(ui.PRF_spinBox->value() * 10.) / 10.);
@@ -226,42 +223,34 @@ void FUSMainWindow::handleSpinBox_PRF_ValueChanged()
         getPRFValue(),
         getLengthValue());// Reads the parameters from the spin boxes
 }
-
 unsigned int FUSMainWindow::getFrequencyValue()
 {
     return ui.Frequency_spinBox->value();  // Returns the value of Length_spinBox
 }
-
 unsigned int FUSMainWindow::getAmplitudeValue()
 {
     return ui.Amplitude_spinBox->value();  // Returns the value of Length_spinBox
 }
-
 unsigned int FUSMainWindow::getPulseDurationValue()
 {
     return ui.PulseDuration_spinBox->value();  // Returns the value of Length_spinBox
 }
-
 unsigned int FUSMainWindow::getDutyCycleValue()
 {
     return ui.DutyCycle_spinBox->value();  // Returns the value of Length_spinBox
 }
-
 unsigned int FUSMainWindow::getPRFValue()
 {
     return ui.PRF_spinBox->value();  // Returns the value of Length_spinBox
 }
-
 unsigned int FUSMainWindow::getLengthValue()
 {
     return ui.Length_spinBox->value();  // Returns the value of Length_spinBox
 }
-
 void FUSMainWindow::handleCheckDeviceButton()
 {
     waveformgenerator->CheckDevice_Click();  // Reads the parameters from the spin boxes
 }
-
 void FUSMainWindow::handleGenerateWaveformButton()
 {
     waveformgenerator->readParameters(
@@ -317,7 +306,6 @@ void FUSMainWindow::handleGenerateWaveformButton()
     int updateInterval = 100; // milliseconds
     progressTimer->start(updateInterval);
 }
-
 void FUSMainWindow::updateProgressBar()
 {
     progressBar->setValue(elapsedTimer.elapsed() / 1000); // Update progress based on elapsed time
@@ -328,7 +316,6 @@ void FUSMainWindow::updateProgressBar()
         progressBar->setValue(waveformgenerator->WaveformGenerator_Vars.Length);
     }
 }
-
 void FUSMainWindow::handleAbortButton()
 {
     // Disconnect the progress timer to stop further updates
@@ -459,7 +446,6 @@ void FUSMainWindow::handleCalibration_scan_ButtonClicked()
 {
 	calibration->scan3DVolume();
 }
-
 void FUSMainWindow::Calibration_Pulse()
 {
     waveformgenerator->readParameters(

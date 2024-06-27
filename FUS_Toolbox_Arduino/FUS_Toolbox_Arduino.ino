@@ -85,7 +85,7 @@ String dequeueCommand()
     commandCount--;
     return command;
   }
-  return ""; // Return an empty string if the queue is empty
+  return "G"; // Return an G as in "green light" if the queue is empty
 }
 
 void processCommand(String command)
@@ -113,7 +113,7 @@ void processCommand(String command)
   }
 }
 
-void processMovementCommand( String command)
+void processMovementCommand(String command)
 {
   char direction = command.charAt(0);
   int firstCommaIndex = command.indexOf(',');

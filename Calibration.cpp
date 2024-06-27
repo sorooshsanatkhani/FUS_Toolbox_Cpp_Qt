@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Calibration.h"
 #include "FUSMainWindow.h"
+#include <QEventLoop>
 
-Calibration::Calibration(Gantry* gantry, WaveformGenerator* waveformGenerator, PicoScope* picoScope, FUSMainWindow* fus_mainwindow, QObject* parent)
-    : QObject(parent), gantry(gantry), waveformGenerator(waveformGenerator), picoScope(picoScope), fus_mainwindow(fus_mainwindow)
+Calibration::Calibration(Gantry* gantry, WaveformGenerator* waveformGenerator, PicoScope* picoScope, ArduinoDevice* Arduino, FUSMainWindow* fus_mainwindow, QObject* parent)
+    : QObject(parent), gantry(gantry), waveformGenerator(waveformGenerator), picoScope(picoScope), Arduino(Arduino), fus_mainwindow(fus_mainwindow)
 {
 }
 
@@ -26,11 +27,15 @@ void Calibration::scan3DVolume()
         {
             for (int z = 0; z <= zMax; z += stepSize)
             {
+                QEventLoop loop;
+                connect(Arduino, &ArduinoDevice::gantryReady, &loop, &QEventLoop::quit);
+                
                 // Move to the next position
                 gantry->move_Click('R', x, 5); // Example command, adjust as necessary
                 gantry->move_Click('F', y, 5);
                 gantry->move_Click('U', z, 5);
 
+                loop.exec(); // Wait here until gantryReady is emitted
                 // Record data
                 recordData(x, y, z);
             }
