@@ -24,7 +24,7 @@ public:
         QObject* parent = nullptr);
     ~Calibration();  // Destructor
     
-    void scan3DVolume(const QString& filePath);
+    void scan3DVolume();
 
 private:
     Gantry* gantry;
@@ -32,9 +32,9 @@ private:
     PicoScope* picoScope;
     FUSMainWindow* fus_mainwindow;
 
-    void moveToNextPosition(int& x, int& y, int& z);
+    //void moveToNextPosition(int& x, int& y, int& z);
     void generatePulse();
-    void recordData(const QString& filePath, int x, int y, int z);
+    void recordData(int x, int y, int z);
 };
 
 #endif // CALIBRATION_H

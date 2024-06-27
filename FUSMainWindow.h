@@ -45,6 +45,9 @@ public:
     unsigned int getPRFValue();
     unsigned int getLengthValue();
 
+    /////// Calibration
+    void Calibration_Pulse();
+
 signals:
     void printSignal(const QString& text);  // Signal to print text
 

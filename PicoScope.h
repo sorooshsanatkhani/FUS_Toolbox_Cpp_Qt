@@ -60,7 +60,7 @@ public:
     PicoScope_Vars initializePicoScope();
     PicoScope_Vars closePicoScope();
     void readBlockPicoScope();  // Function to read the PicoScope in block mode
-    void writePicoDataToBinaryFile();  // Function to write the PicoScope data to a binary file
+    void writePicoDataToBinaryFile(int,int,int);  // Function to write the PicoScope data to a binary file
     int y_limit;
 
 private slots:

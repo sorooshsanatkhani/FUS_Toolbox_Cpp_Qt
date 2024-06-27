@@ -281,20 +281,28 @@ void PicoScope::plotPico()
     customPlot->yAxis->setRange(-y_limit, y_limit);
     customPlot->replot();
 }
-void PicoScope::writePicoDataToBinaryFile()
+void PicoScope::writePicoDataToBinaryFile(int x, int y, int z)
 {
-    // Create the directory name with the current date
-    QString dirName = "Data" + QDate::currentDate().toString("yyyyMMdd");
-    QDir dir(dirName);
-    if (!dir.exists())
+    // Static variable to ensure the file name is set only once per application start
+    static QString fileName;
+
+    // Check if fileName is empty, which means this is the first call to the function
+    if (fileName.isEmpty())
     {
-        dir.mkpath(".");
+        // Create the directory name with the current date
+        QString dirName = "Data" + QDate::currentDate().toString("yyyyMMdd");
+        QDir dir(dirName);
+        if (!dir.exists())
+        {
+            dir.mkpath(".");
+        }
+
+        // Construct the file name
+        fileName = dir.absolutePath() + "/PicoData_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".bin";
     }
 
-    // Construct the file name
-    QString fileName = dir.absolutePath() + "/PicoData_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".bin";
     QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly))
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Append))
     {
         fus_mainwindow->emitPrintSignal("Unable to open file for writing: " + fileName);
         return;
@@ -303,11 +311,13 @@ void PicoScope::writePicoDataToBinaryFile()
     QDataStream out(&file);
     out.setByteOrder(QDataStream::LittleEndian);  // Assuming little endian for binary data
 
-    // Write t_numbers and MV_numbers to the binary file
+    // Write the header (coordinates) followed by t_numbers and MV_numbers to the binary file
+    // Since the file is opened in append mode, this will add to the end of the file
+    out << qint32(x) << qint32(y) << qint32(z); // Writing the coordinates as header
     for (int i = 0; i < picoData.t_numbers.size(); ++i)
     {
-        out << picoData.t_numbers[i];
-        out << static_cast<qint64>(picoData.MV_numbers[i]);
+        out << qint64(picoData.t_numbers[i]); // Assuming qint64 for time values
+        out << qint64(picoData.MV_numbers[i]); // Assuming qint64 for MV values, adjust if necessary
     }
 
     file.close();

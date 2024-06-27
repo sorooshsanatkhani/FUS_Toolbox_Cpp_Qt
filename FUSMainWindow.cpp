@@ -457,5 +457,61 @@ void FUSMainWindow::handleGantry_movetoposition_ButtonClicked()
 /////// Calibration Functions ///////
 void FUSMainWindow::handleCalibration_scan_ButtonClicked()
 {
-	calibration->scan3DVolume("C:/Users/VPF Lab/Documents/3DVolume.txt");
+	calibration->scan3DVolume();
+}
+
+void FUSMainWindow::Calibration_Pulse()
+{
+    waveformgenerator->readParameters(
+        500000,
+        80,
+        10,
+        2,
+        2,
+        120);
+
+    // Start the elapsed timer
+    elapsedTimer.start();
+
+    progressBar->setRange(0, waveformgenerator->WaveformGenerator_Vars.Length);
+    progressBar->setValue(0);
+
+    ui.WaveformGenerator_GroupBox->setEnabled(false);
+    ui.GenerateWaveform_Button->setEnabled(false);
+    ui.Abort_Button->setEnabled(true);
+
+    // Delete the old completionTimer if it exists and create a new completionTimer
+    if (completionTimer) {
+        completionTimer->stop();
+        delete completionTimer;
+        completionTimer = nullptr;
+    }
+    completionTimer = new QTimer(this);
+    completionTimer->setSingleShot(true);
+    // Connect the timeout signal
+    connect(completionTimer, &QTimer::timeout, this, [this]() {
+        // Emit a print signal
+        emitPrintSignal("Waveform Generation Completed.");
+        // Handle abort and cleanup
+        handleAbortButton();
+        });
+    // Set the timeout for the completion timer to the length of the waveform
+    completionTimer->start(waveformgenerator->WaveformGenerator_Vars.Length * 1000);
+
+    // Start the waveform generation
+    waveformgenerator->GenerateWaveform_Click();
+
+    // Create a new progressTimer
+    if (progressTimer) {
+        progressTimer->stop();
+        delete progressTimer;
+        progressTimer = nullptr;
+    }
+    progressTimer = new QTimer(this);
+    progressTimer->setSingleShot(false);
+    // Connect the timeout signal for updating the progress bar
+    connect(progressTimer, &QTimer::timeout, this, &FUSMainWindow::updateProgressBar);
+    // Set the timeout interval to a reasonable value (e.g., 100 ms)
+    int updateInterval = 100; // milliseconds
+    progressTimer->start(updateInterval);
 }
