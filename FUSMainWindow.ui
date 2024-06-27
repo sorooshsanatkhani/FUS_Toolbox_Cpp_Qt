@@ -1166,6 +1166,19 @@
 port</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="Calibration_scan_Button">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>10</y>
+      <width>51</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scan</string>
+    </property>
+   </widget>
    <zorder>WaveformGenerator_GroupBox</zorder>
    <zorder>verticalLayoutWidget</zorder>
    <zorder>readButton</zorder>
@@ -1212,6 +1225,7 @@ port</string>
    <zorder>Gantry_y_spinBox</zorder>
    <zorder>Gantry_z_spinBox</zorder>
    <zorder>Gantry_open_Button</zorder>
+   <zorder>Calibration_scan_Button</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

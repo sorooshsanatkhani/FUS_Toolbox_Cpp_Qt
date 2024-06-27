@@ -11,6 +11,7 @@
 #include "PicoScope.h"  // Includes the PicoScope class
 #include "WaveformGenerator.h"
 #include "Gantry.h"
+#include "Calibration.h"
 #include <QProgressBar>
 #include <QStateMachine>
 #include <QState>
@@ -82,10 +83,14 @@ private slots:
     void handleGantry_return_ButtonClicked();
     void handleGantry_movetoposition_ButtonClicked();
 
+    // Calibration Functions
+    void handleCalibration_scan_ButtonClicked();
+
 private:
     PicoScope* picoScope;  // Pointer to a PicoScope object
     WaveformGenerator* waveformgenerator;
     Gantry* gantry;
+    Calibration* calibration;
     QProgressBar* progressBar;
     QElapsedTimer elapsedTimer;
     QTimer* progressTimer;

@@ -18,6 +18,7 @@ FUSMainWindow::FUSMainWindow(QWidget* parent)
     picoScope(new PicoScope(this)),
     waveformgenerator(new WaveformGenerator(this)),
     gantry(new Gantry(this)),
+    calibration(new Calibration(gantry, waveformgenerator, picoScope, this, this)),
     completionTimer(new QTimer(this)),
     progressTimer(new QTimer(this))
 {
@@ -50,6 +51,7 @@ FUSMainWindow::~FUSMainWindow()
 {
     delete picoScope;
     delete waveformgenerator;
+    delete calibration;
 
     // Properly delete timers to avoid memory leaks
     if (progressTimer)
@@ -103,6 +105,9 @@ void FUSMainWindow::connectSignalsAndSlots()
     connect(ui.Gantry_set_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_set_ButtonClicked);
     connect(ui.Gantry_return_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_return_ButtonClicked);
     connect(ui.Gantry_movetoposition_Button, &QPushButton::clicked, this, &FUSMainWindow::handleGantry_movetoposition_ButtonClicked);
+
+    // Connects the UI parts related to Calibration
+    connect(ui.Calibration_scan_Button, &QPushButton::clicked, this, &FUSMainWindow::handleCalibration_scan_ButtonClicked);
 }
 
 // Defines the updateTextBox slot
@@ -116,25 +121,25 @@ void FUSMainWindow::emitPrintSignal(const QString& text)
     emit printSignal(text);
 }
 
+//////////////////////////////////////
+/// PicoScope Functions /////////////
+//////////////////////////////////////
 void FUSMainWindow::handleInitializeButton()
 {
     ui.readButton->setEnabled(true);
     ui.CloseButton->setEnabled(true);
     PicoScope::PicoScope_Vars pico_vars = picoScope->initializePicoScope();  // Reads the parameters from the spin boxes
 }
-
 void FUSMainWindow::handleReadButton()
 {
     picoScope->readBlockPicoScope();  // Reads the parameters from the spin boxes
 }
-
 void FUSMainWindow::handleCloseButton()
 {
     PicoScope::PicoScope_Vars pico_vars = picoScope->closePicoScope();  // Reads the parameters from the spin boxes
     ui.readButton->setEnabled(false);
     ui.CloseButton->setEnabled(false);
 }
-
 // Defines the handleSpinBoxValueChanged slot
 void FUSMainWindow::handleSpinBoxValueChanged()
 {
@@ -146,30 +151,25 @@ void FUSMainWindow::handleSpinBoxValueChanged()
     string_to_print << std::fixed << (((params.Timebase + 1) / 10000.) * params.Buffer);
     ui.BlockDuration_label->setText(QString::fromStdString("Block duration =  " + std::move(string_to_print).str() + " ms"));
 }
-
 // Defines the getter for the value of Timebase_spinBox
 int FUSMainWindow::getTimebaseValue()
 {
     return ui.Timebase_spinBox->value();  // Returns the value of Timebase_spinBox
 }
-
 // Defines the getter for the value of Buffer_spinBoxOFF
 int FUSMainWindow::getBufferValue()
 {
     return ui.Buffer_spinBox->value();  // Returns the value of Buffer_spinBox
 }
-
 // Defines the getter for the value of yaxisRange_lineEdit
 int FUSMainWindow::getYaxisRangeValue()
 {
     return ui.yaxisRange_lineEdit->text().toInt();  // Returns the value of yaxisRange_lineEdit
 }
-
 uint16_t FUSMainWindow::getRangeValue()
 {
     return ui.Range_comboBox->currentIndex();  // Returns the value of Range_comboBox
 }
-
 uint16_t FUSMainWindow::getTriggerVoltageValue()
 {
     return ui.TriggerVoltage_lineEdit->text().toInt();  // Returns the value of TriggerVoltage_lineEdit
@@ -361,7 +361,6 @@ void FUSMainWindow::handleGantry_open_ButtonClicked()
 {
     gantry->open_Click();
 }
-
 void FUSMainWindow::setupGantryToggleButton()
 {
     QStateMachine* machine = new QStateMachine(this);
@@ -396,7 +395,6 @@ void FUSMainWindow::handleGantryToggleButtonClicked()
         gantry->on();
     }
 }
-
 void FUSMainWindow::populateDIRComboBox() {
     QStringList options = { "Right", "Left", "Up", "Down", "Forward", "Backward"};
     ui.Gantry_DIR_comboBox->addItems(options);
@@ -453,4 +451,11 @@ void FUSMainWindow::handleGantry_movetoposition_ButtonClicked()
 	gantry->gantriGoToPosition.y = ui.Gantry_y_spinBox->value();
 	gantry->gantriGoToPosition.z = ui.Gantry_z_spinBox->value();
 	gantry->MoveTo();
+}
+
+///////////////////////////////////
+/////// Calibration Functions ///////
+void FUSMainWindow::handleCalibration_scan_ButtonClicked()
+{
+	calibration->scan3DVolume("C:/Users/VPF Lab/Documents/3DVolume.txt");
 }

@@ -1,8 +1,13 @@
 #include "stdafx.h"
 #include "Calibration.h"
+#include "FUSMainWindow.h"
 
-Calibration::Calibration(Gantry* gantry, WaveformGenerator* waveformGenerator, PicoScope* picoScope, QObject* parent)
-    : QObject(parent), gantry(gantry), waveformGenerator(waveformGenerator), picoScope(picoScope)
+Calibration::Calibration(Gantry* gantry, WaveformGenerator* waveformGenerator, PicoScope* picoScope, FUSMainWindow* fus_mainwindow, QObject* parent)
+    : QObject(parent), gantry(gantry), waveformGenerator(waveformGenerator), picoScope(picoScope), fus_mainwindow(fus_mainwindow)
+{
+}
+
+Calibration::~Calibration()
 {
 }
 
@@ -18,6 +23,9 @@ void Calibration::scan3DVolume(const QString& filePath)
     int xMax = 10, yMax = 10, zMax = 10;
     int stepSize = 1;
 
+    // Generate a pulse
+    generatePulse();
+
     for (int x = 0; x <= xMax; x += stepSize)
     {
         for (int y = 0; y <= yMax; y += stepSize)
@@ -29,8 +37,6 @@ void Calibration::scan3DVolume(const QString& filePath)
                 gantry->move_Click('Y', y, 5);
                 gantry->move_Click('Z', z, 5);
 
-                // Generate a pulse
-                generatePulse();
 
                 // Record data
                 recordData(filePath, x, y, z);
@@ -46,8 +52,17 @@ void Calibration::scan3DVolume(const QString& filePath)
 
 void Calibration::generatePulse()
 {
-    // Configure and start the waveform generator
-    // This is a placeholder function. Implement according to your project's requirements.
+    waveformGenerator->readParameters(
+        500000,
+        80,
+        10,
+        2,
+        2,
+        120);
+    waveformGenerator->GenerateWaveform_Click();
+    fus_mainwindow->ui.WaveformGenerator_GroupBox->setEnabled(false);
+    fus_mainwindow->ui.GenerateWaveform_Button->setEnabled(false);
+    fus_mainwindow->ui.Abort_Button->setEnabled(true);
 }
 
 void Calibration::recordData(const QString& filePath, int x, int y, int z)

@@ -10,17 +10,27 @@
 #include "WaveformGenerator.h"
 #include "PicoScope.h"
 
+class FUSMainWindow;
+
 class Calibration : public QObject
 {
     Q_OBJECT
 public:
-    explicit Calibration(Gantry* gantry, WaveformGenerator* waveformGenerator, PicoScope* picoScope, QObject* parent = nullptr);
+    explicit Calibration(
+        Gantry* gantry = nullptr,
+        WaveformGenerator* waveformGenerator = nullptr,
+        PicoScope* picoScope = nullptr,
+        FUSMainWindow* fus_mainwindow = nullptr,
+        QObject* parent = nullptr);
+    ~Calibration();  // Destructor
+    
     void scan3DVolume(const QString& filePath);
 
 private:
     Gantry* gantry;
     WaveformGenerator* waveformGenerator;
     PicoScope* picoScope;
+    FUSMainWindow* fus_mainwindow;
 
     void moveToNextPosition(int& x, int& y, int& z);
     void generatePulse();

@@ -101,6 +101,8 @@ void PicoScope::readBlockPicoScope()
         picoVar.unit.channelSettings[0].range = PS4000_50V;
         break;
     }
+    picoData.MV_numbers.clear();
+    picoData.t_numbers.clear();
     ////////////////////////////////////////////////
 
     //////////// Setting up the trigger /////////
@@ -203,8 +205,8 @@ void PicoScope::readBlockPicoScope()
 
         for (i = 0; i < sampleCount; i++)
         {
-            t_numbers.push_back(g_times[0] + (int64_t)(i * timeInterval));
-            MV_numbers.push_back(adc_to_mv(buffers[0][i], picoVar.unit.channelSettings[PS4000_CHANNEL_A].range));
+            picoData.t_numbers.push_back(g_times[0] + (int64_t)(i * timeInterval));
+            picoData.MV_numbers.push_back(adc_to_mv(buffers[0][i], picoVar.unit.channelSettings[PS4000_CHANNEL_A].range));
         }
 
         plotPico();
@@ -219,8 +221,6 @@ void PicoScope::readBlockPicoScope()
         fus_mainwindow->emitPrintSignal(QString::fromStdString("BlockDataHandler:ps4000Stop ------ 0x%08lx " + to_string(picoVar.status_Stop)));
     }
 
-    MV_numbers.clear();
-    t_numbers.clear();
     for (i = 0; i < 2; i++)
     {
         free(buffers[i]);
@@ -244,10 +244,10 @@ PicoScope::PicoScope_Vars PicoScope::closePicoScope()
 
 void PicoScope::plotPico()
 {
-    QVector<double> x(t_numbers.size()), y(MV_numbers.size());
-    fus_mainwindow->emitPrintSignal(QString::fromStdString("t_numbers size = " + to_string(t_numbers.size())));
-    fus_mainwindow->emitPrintSignal(QString::fromStdString("t_numbers last element = " + to_string(t_numbers.back())));
-    double max_t = t_numbers.back() / pow(10, 6);
+    QVector<double> x(picoData.t_numbers.size()), y(picoData.MV_numbers.size());
+    fus_mainwindow->emitPrintSignal(QString::fromStdString("t_numbers size = " + to_string(picoData.t_numbers.size())));
+    fus_mainwindow->emitPrintSignal(QString::fromStdString("t_numbers last element = " + to_string(picoData.t_numbers.back())));
+    double max_t = picoData.t_numbers.back() / pow(10, 6);
     QString xLabel = "ms";
     double scale = pow(10, 6);
     if (max_t < 1) {
@@ -262,10 +262,10 @@ void PicoScope::plotPico()
         scale = pow(10, 9);
         xLabel = "s";
     }
-    for (int i = 0; i < MV_numbers.size(); ++i)
+    for (int i = 0; i < picoData.MV_numbers.size(); ++i)
     {
-        x[i] = t_numbers[i] / scale;
-        y[i] = MV_numbers[i];
+        x[i] = picoData.t_numbers[i] / scale;
+        y[i] = picoData.MV_numbers[i];
     }
     y_limit = fus_mainwindow->getYaxisRangeValue();
     // clear existing graphs:
@@ -277,7 +277,39 @@ void PicoScope::plotPico()
     customPlot->xAxis->setLabel(xLabel);
     customPlot->yAxis->setLabel("mV");
     // set axes ranges, so we see all data:
-    customPlot->xAxis->setRange(0, t_numbers.back() / scale);
+    customPlot->xAxis->setRange(0, picoData.t_numbers.back() / scale);
     customPlot->yAxis->setRange(-y_limit, y_limit);
     customPlot->replot();
+}
+void PicoScope::writePicoDataToBinaryFile()
+{
+    // Create the directory name with the current date
+    QString dirName = "Data" + QDate::currentDate().toString("yyyyMMdd");
+    QDir dir(dirName);
+    if (!dir.exists())
+    {
+        dir.mkpath(".");
+    }
+
+    // Construct the file name
+    QString fileName = dir.absolutePath() + "/PicoData_" + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + ".bin";
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        fus_mainwindow->emitPrintSignal("Unable to open file for writing: " + fileName);
+        return;
+    }
+
+    QDataStream out(&file);
+    out.setByteOrder(QDataStream::LittleEndian);  // Assuming little endian for binary data
+
+    // Write t_numbers and MV_numbers to the binary file
+    for (int i = 0; i < picoData.t_numbers.size(); ++i)
+    {
+        out << picoData.t_numbers[i];
+        out << static_cast<qint64>(picoData.MV_numbers[i]);
+    }
+
+    file.close();
+    fus_mainwindow->emitPrintSignal("Data written to binary file: " + fileName);
 }

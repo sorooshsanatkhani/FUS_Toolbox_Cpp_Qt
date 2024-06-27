@@ -8,6 +8,10 @@
 
 #include <QObject>  // Includes the QObject class for creating custom Qt objects
 #include <QTimer>  // Includes the QTimer class for creating timers
+#include <QDir>  // For directory operations
+#include <QDate>  // For getting the current date
+#include <QFile>  // For file operations
+#include <QDataStream>  // For binary write
 #include <random>  // Includes the random library for generating random numbers
 #include <deque>  // Includes the deque library for using double-ended queues
 #include "Resources/qcustomplot.h"  // Includes the QCustomPlot library for plotting
@@ -43,6 +47,12 @@ public:
     };
     PicoScope_Vars picoVar;
 
+    struct PicoScopeData {
+        std::deque<int64_t> t_numbers;
+        std::deque<long> MV_numbers;
+    };
+    PicoScopeData picoData;
+
     explicit PicoScope(FUSMainWindow* parent = nullptr);  // Constructor
     ~PicoScope();  // Destructor
 
@@ -50,15 +60,13 @@ public:
     PicoScope_Vars initializePicoScope();
     PicoScope_Vars closePicoScope();
     void readBlockPicoScope();  // Function to read the PicoScope in block mode
-
+    void writePicoDataToBinaryFile();  // Function to write the PicoScope data to a binary file
     int y_limit;
 
 private slots:
     void plotPico();  // Slot to plot the PicoScope data
 
 private:
-    std::deque<long> MV_numbers;  // Deque to hold the MV numbers
-    std::deque<int64_t> t_numbers;  // Deque to hold the t numbers
     QCustomPlot* customPlot;  // Pointer to a QCustomPlot object
     FUSMainWindow* fus_mainwindow;  // Pointer to a FUSMainWindow object
 
